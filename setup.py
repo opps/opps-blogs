@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 from opps import blogs
 
 
-install_requires = ["opps>=0.2"]
+install_requires = ["opps"]
 
 classifiers = ["Development Status :: 4 - Beta",
                "Intended Audience :: Developers",
