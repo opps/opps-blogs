@@ -14,6 +14,16 @@ class PostBlogList(OppsList):
     channel_long_slug = []
     channel = None
 
+    def get_template_names(self):
+        templates = super(PostBlogList, self).get_template_names()
+        domain_folder = self.get_template_folder()
+        templates = ['{}/blog/{}/{}.html'.format(
+            domain_folder,
+            self.kwargs['user__useraname'],
+            self.paginate_suffix
+        )] + templates
+        return templates
+
     @property
     def queryset(self):
         self.site = get_current_site(self.request).domain
@@ -31,6 +41,16 @@ class PostBlogDetail(OppsDetail):
     type = "blogs"
     channel_long_slug = []
     channel = None
+
+    def get_template_names(self):
+        templates = super(PostBlogDetail, self).get_template_names()
+        domain_folder = self.get_template_folder()
+        templates = ['{}/blog/{}/{}.html'.format(
+            domain_folder,
+            self.kwargs['user__useraname'],
+            self.paginate_suffix
+        )] + templates
+        return templates
 
     @property
     def queryset(self):
