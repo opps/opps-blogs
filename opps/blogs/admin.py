@@ -20,8 +20,8 @@ class BlogPostAdmin(ContainerAdmin, AdminViewPermission):
 
     fieldsets = (
         (_(u'Identification'), {
-            'fields': ('site', 'title', 'slug', 'get_http_absolute_url',
-                       'short_url')}),
+            'fields': ('blog', 'site', 'title', 'slug',
+                       'get_http_absolute_url', 'short_url')}),
         (_(u'Content'), {
             'fields': ('hat', 'short_title', 'headline', 'content',
                        ('main_image', 'image_thumb'), 'tags')}),
