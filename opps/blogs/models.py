@@ -15,6 +15,7 @@ class Blog(NotUserPublishable, Slugged):
 
 
 class BlogPost(Article):
+    blog = models.ForeignKey('blogs.Blog')
     content = models.TextField(_(u"Content"))
     albums = models.ManyToManyField(
         'articles.Album',
