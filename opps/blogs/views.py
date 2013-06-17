@@ -5,11 +5,11 @@ from django.utils import timezone
 
 from opps.articles.views.generic import OppsDetail, OppsList
 
-from .models import PostBlog
+from opps.blogs.models import Blog, BlogPost
 
 
 class PostBlogList(OppsList):
-    model = PostBlog
+    model = BlogPost
     type = "blogs"
     channel_long_slug = []
     channel = None
@@ -37,7 +37,7 @@ class PostBlogList(OppsList):
 
 
 class PostBlogDetail(OppsDetail):
-    model = PostBlog
+    model = BlogPost
     type = "blogs"
     channel_long_slug = []
     channel = None
