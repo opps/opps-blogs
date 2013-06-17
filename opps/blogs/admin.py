@@ -9,7 +9,7 @@ from opps.containers.admin import ContainerSourceInline, ContainerImageInline
 from opps.containers.admin import ContainerAdmin
 
 from .forms import BlogPostAdminForm
-from .models import BlogPost
+from .models import Blog, BlogPost
 
 
 @apply_opps_rules('blogs')
@@ -34,4 +34,8 @@ class BlogPostAdmin(ContainerAdmin, AdminViewPermission):
     )
 
 
+class BlogAdmin(admin.ModelAdmin):
+    filter_horizontal = ('user',)
+
 admin.site.register(BlogPost, BlogPostAdmin)
+admin.site.register(Blog, BlogAdmin)
