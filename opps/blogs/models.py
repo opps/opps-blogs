@@ -29,4 +29,4 @@ class BlogPost(Article):
         verbose_name_plural = _(u'Blog Posts')
 
     def get_absolute_url(self):
-        return u"/blog/{}/{}".format(self.user.username, self.slug)
+        return u"/blog/{}/{}".format(self.blog.slug, self.slug)
