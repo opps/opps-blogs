@@ -34,6 +34,19 @@ class BlogPostAdmin(ContainerAdmin, AdminViewPermission):
     )
 
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(AdminViewPermission, self).get_form(request, obj,
+                                                         **kwargs)
+        try:
+            blog = Blog.objects.filter(user=request.user)
+            form.base_fields['blog'].choices = ((blog.id,
+                                                 blog.name),)
+        except:
+            pass
+
+        return form
+
+
 class BlogAdmin(admin.ModelAdmin):
     filter_horizontal = ('user',)
 
