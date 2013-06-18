@@ -48,7 +48,19 @@ class BlogPostAdmin(ContainerAdmin, AdminViewPermission):
 
 
 class BlogAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ["name"]}
     filter_horizontal = ('user',)
+
+    list_display = ['name', 'site', 'published']
+
+    fieldsets = (
+        (_(u'Identification'), {
+            'fields': ('site', 'name', 'slug', 'user')}),
+        (_(u'Publication'), {
+            'classes': ('extrapretty'),
+            'fields': ('published', 'date_available')}),
+    )
+
 
 admin.site.register(BlogPost, BlogPostAdmin)
 admin.site.register(Blog, BlogAdmin)
