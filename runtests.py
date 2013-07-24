@@ -40,7 +40,6 @@ if not settings.configured:
             'opps.flatpages',
 
             'opps.blogs',
-            'south',
             'taggit',
 
         ),
@@ -56,7 +55,7 @@ if not settings.configured:
 
 
 def runtests():
-    argv = [sys.argv[0], 'schemamigration', '--initial', 'blogs']
+    argv = [sys.argv[0], 'test', 'blogs']
     execute_from_command_line(argv)
     sys.exit(0)
 

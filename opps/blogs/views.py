@@ -5,7 +5,7 @@ from django.utils import timezone
 
 from opps.articles.views.generic import OppsDetail, OppsList
 
-from opps.blogs.models import Blog, BlogPost
+from opps.blogs.models import BlogPost
 
 
 class PostBlogList(OppsList):
