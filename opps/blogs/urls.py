@@ -9,10 +9,10 @@ from .views import PostBlogList, PostBlogDetail
 
 urlpatterns = patterns(
     '',
-    url(r'^(?P<user__username>[\w]+)/(?P<slug>[\w]+)$',
+    url(r'^(?P<blog__slug>[\w-]+)/(?P<slug>[\w-]+)/$',
         cache_page(settings.OPPS_CACHE_EXPIRE)(PostBlogDetail.as_view()),
         name='blogpost-detail'),
-    url(r'^(?P<user__username>[\w]+)$',
+    url(r'^(?P<blog__slug>[\w-]+)/$',
         cache_page(settings.OPPS_CACHE_EXPIRE)(PostBlogList.as_view()),
         name='blogpost-list'),
 )

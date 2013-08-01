@@ -3,62 +3,69 @@
 from django.contrib.sites.models import get_current_site
 from django.utils import timezone
 
-from opps.articles.views.generic import OppsDetail, OppsList
+from opps.views.generic.list import ListView
+from opps.views.generic.detail import DetailView
 
 from opps.blogs.models import BlogPost
 
 
-class PostBlogList(OppsList):
+class PostBlogList(ListView):
     model = BlogPost
     type = "blogs"
     channel_long_slug = []
     channel = None
+    paginate_suffix = 'list'
 
     def get_template_names(self):
         templates = super(PostBlogList, self).get_template_names()
         domain_folder = self.get_template_folder()
-        templates = ['{}/blog/{}/{}.html'.format(
+        templates = ['{}/blogs/{}/{}.html'.format(
             domain_folder,
-            self.kwargs['user__useraname'],
+            self.kwargs['blog__slug'],
             self.paginate_suffix
-        )] + templates
+        ), '{}/blogs/{}.html'.format(
+            domain_folder,
+            self.paginate_suffix)] + templates
+
         return templates
 
-    @property
-    def queryset(self):
-        self.site = get_current_site(self.request).domain
+    def get_queryset(self):
+        self.site = get_current_site(self.request)
         self.long_slug = None
         self.article = self.model.objects.filter(
-            site_domain=self.site,
-            user__useraname=self.kwargs['user__useraname'],
+            site_domain=self.site.domain,
+            blog__slug=self.kwargs['blog__slug'],
             date_available__lte=timezone.now(),
             published=True)
+
         return self.article
 
 
-class PostBlogDetail(OppsDetail):
+class PostBlogDetail(DetailView):
     model = BlogPost
     type = "blogs"
     channel_long_slug = []
     channel = None
+    paginate_suffix = 'detail'
 
     def get_template_names(self):
         templates = super(PostBlogDetail, self).get_template_names()
         domain_folder = self.get_template_folder()
-        templates = ['{}/blog/{}/{}.html'.format(
+        templates = ['{}/blogs/{}/{}.html'.format(
             domain_folder,
-            self.kwargs['user__useraname'],
+            self.kwargs['blog__slug'],
             self.paginate_suffix
-        )] + templates
+        ), '{}/blogs/{}.html'.format(
+            domain_folder,
+            self.paginate_suffix)] + templates
         return templates
 
-    @property
-    def queryset(self):
-        self.site = get_current_site(self.request).domain
+    def get_queryset(self):
+        self.site = get_current_site(self.request)
         self.long_slug = None
         self.article = self.model.objects.filter(
-            site_domain=self.site,
-            user__useraname=self.kwargs['user__useraname'],
+            site_domain=self.site.domain,
+            blog__slug=self.kwargs['blog__slug'],
             slug=self.kwargs['slug'],
             date_available__lte=timezone.now(),
             published=True)
