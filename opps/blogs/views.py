@@ -6,7 +6,38 @@ from django.utils import timezone
 from opps.views.generic.list import ListView
 from opps.views.generic.detail import DetailView
 
-from opps.blogs.models import BlogPost
+from opps.blogs.models import BlogPost, Blog
+
+
+class BlogList(ListView):
+    model = Blog
+    channel_long_slug = []
+    channel = None
+    paginate_suffix = 'list'
+    context_object_name = 'blogs'
+
+    def get_template_names(self):
+        templates = super(BlogList, self).get_template_names()
+        domain_folder = self.get_template_folder()
+        templates = ['{}/blogs/{}/authors.html'.format(
+            domain_folder,
+            self.kwargs['blog__slug'],
+        ), '{}/blogs/authors.html'.format(
+            domain_folder
+        )] + templates
+        print templates
+        return templates
+
+    def get_queryset(self):
+        self.site = get_current_site(self.request)
+        self.long_slug = None
+        self.blogs = self.model.objects.filter(
+            site_domain=self.site.domain,
+            slug=self.kwargs['blog__slug'],
+            date_available__lte=timezone.now(),
+            published=True)
+
+        return self.blogs
 
 
 class BlogPostList(ListView):
