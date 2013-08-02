@@ -6,12 +6,17 @@ from django.utils.translation import ugettext_lazy as _
 
 from opps.core.models import NotUserPublishable, Slugged
 from opps.articles.models import Article
+from opps.images.models import Image
 
 
 class Blog(NotUserPublishable, Slugged):
 
     user = models.ManyToManyField(settings.AUTH_USER_MODEL)
     name = models.CharField(_(u"Name"), max_length=140)
+    main_image = models.ForeignKey(Image, verbose_name=_(u'Main Image'))
+    description = models.TextField(_(u'Description'), blank=True)
+
+    __unicode__ = lambda self: self.name
 
 
 class BlogPost(Article):
