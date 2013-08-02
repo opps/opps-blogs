@@ -9,7 +9,7 @@ from opps.views.generic.detail import DetailView
 from opps.blogs.models import BlogPost
 
 
-class PostBlogList(ListView):
+class BlogPostList(ListView):
     model = BlogPost
     type = "blogs"
     channel_long_slug = []
@@ -17,7 +17,7 @@ class PostBlogList(ListView):
     paginate_suffix = 'list'
 
     def get_template_names(self):
-        templates = super(PostBlogList, self).get_template_names()
+        templates = super(BlogPostList, self).get_template_names()
         domain_folder = self.get_template_folder()
         templates = ['{}/blogs/{}/{}.html'.format(
             domain_folder,
@@ -41,7 +41,7 @@ class PostBlogList(ListView):
         return self.article
 
 
-class PostBlogDetail(DetailView):
+class BlogPostDetail(DetailView):
     model = BlogPost
     type = "blogs"
     channel_long_slug = []
@@ -49,7 +49,7 @@ class PostBlogDetail(DetailView):
     paginate_suffix = 'detail'
 
     def get_template_names(self):
-        templates = super(PostBlogDetail, self).get_template_names()
+        templates = super(BlogPostDetail, self).get_template_names()
         domain_folder = self.get_template_folder()
         templates = ['{}/blogs/{}/{}.html'.format(
             domain_folder,
