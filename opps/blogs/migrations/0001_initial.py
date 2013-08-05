@@ -3,7 +3,9 @@ import datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+
 from django.contrib.auth import get_user_model
+
 
 User = get_user_model()
 
@@ -23,6 +25,8 @@ class Migration(SchemaMigration):
             ('published', self.gf('django.db.models.fields.BooleanField')(default=False, db_index=True)),
             ('slug', self.gf('django.db.models.fields.SlugField')(max_length=150)),
             ('name', self.gf('django.db.models.fields.CharField')(max_length=140)),
+            ('main_image', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['images.Image'])),
+            ('description', self.gf('django.db.models.fields.TextField')(blank=True)),
         ))
         db.send_create_signal(u'blogs', ['Blog'])
 
@@ -31,9 +35,9 @@ class Migration(SchemaMigration):
         db.create_table(m2m_table_name, (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('blog', models.ForeignKey(orm[u'blogs.blog'], null=False)),
-            ('user', models.ForeignKey(orm["%s.%s" % (User._meta.app_label, User._meta.object_name)], null=False))
+            (User._meta.module_name, models.ForeignKey(orm["%s.%s" % (User._meta.app_label, User._meta.object_name)], null=False))
         ))
-        db.create_unique(m2m_table_name, ['blog_id', 'user_id'])
+        db.create_unique(m2m_table_name, ['blog_id', 'customuser_id'])
 
         # Adding model 'BlogPost'
         db.create_table(u'blogs_blogpost', (
@@ -70,6 +74,9 @@ class Migration(SchemaMigration):
 
 
     models = {
+        u'%s.%s' % (User._meta.app_label, User._meta.module_name): {
+            'Meta': {'object_name': User.__name__},
+        },
         u'articles.album': {
             'Meta': {'object_name': 'Album'},
             u'container_ptr': ('django.db.models.fields.related.OneToOneField', [], {'to': u"orm['containers.Container']", 'unique': 'True', 'primary_key': 'True'}),
@@ -89,22 +96,21 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
-        "%s.%s" % (User._meta.app_label, User._meta.module_name): {
-            'Meta': {'object_name': User.__name__},
-        },
         u'blogs.blog': {
             'Meta': {'object_name': 'Blog'},
             'date_available': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'db_index': 'True'}),
             'date_insert': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'date_update': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            'description': ('django.db.models.fields.TextField', [], {'blank': 'True'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'main_image': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['images.Image']"}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '140'}),
             'published': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
             'site': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': u"orm['sites.Site']"}),
             'site_domain': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'site_iid': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True', 'max_length': '4', 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '150'}),
-            'user': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['%s.%s']" % (User._meta.app_label, User._meta.object_name), 'symmetrical': 'False'})
+            'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['%s.%s']" % (User._meta.app_label, User._meta.object_name)})
         },
         u'blogs.blogpost': {
             'Meta': {'object_name': 'BlogPost'},
@@ -116,7 +122,7 @@ class Migration(SchemaMigration):
             'short_title': ('django.db.models.fields.CharField', [], {'max_length': '140', 'null': 'True', 'blank': 'True'})
         },
         u'channels.channel': {
-            'Meta': {'ordering': "['name', 'parent', 'published']", 'unique_together': "(('site', 'long_slug', 'slug', 'parent'),)", 'object_name': 'Channel'},
+            'Meta': {'ordering': "['name', 'parent__id', 'published']", 'unique_together': "(('site', 'long_slug', 'slug', 'parent'),)", 'object_name': 'Channel'},
             'date_available': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'db_index': 'True'}),
             'date_insert': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
             'date_update': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
@@ -125,20 +131,21 @@ class Migration(SchemaMigration):
             'homepage': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'include_in_main_rss': ('django.db.models.fields.BooleanField', [], {'default': 'True'}),
-            'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
-            'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            'layout': ('django.db.models.fields.CharField', [], {'default': "'default'", 'max_length': '250', 'db_index': 'True'}),
+            u'level': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            u'lft': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'long_slug': ('django.db.models.fields.SlugField', [], {'max_length': '250'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '60'}),
             'order': ('django.db.models.fields.IntegerField', [], {'default': '0'}),
             'parent': ('mptt.fields.TreeForeignKey', [], {'blank': 'True', 'related_name': "'subchannel'", 'null': 'True', 'to': u"orm['channels.Channel']"}),
             'published': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
-            'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            u'rght': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'show_in_menu': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'site': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': u"orm['sites.Site']"}),
             'site_domain': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '100', 'null': 'True', 'blank': 'True'}),
             'site_iid': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True', 'max_length': '4', 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '150'}),
-            'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
+            u'tree_id': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['%s.%s']" % (User._meta.app_label, User._meta.object_name)})
         },
         u'containers.container': {
@@ -165,6 +172,7 @@ class Migration(SchemaMigration):
             'site_iid': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True', 'max_length': '4', 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '150'}),
             'sources': ('django.db.models.fields.related.ManyToManyField', [], {'symmetrical': 'False', 'to': u"orm['sources.Source']", 'null': 'True', 'through': u"orm['containers.ContainerSource']", 'blank': 'True'}),
+            'tags': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '4000', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '140', 'db_index': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['%s.%s']" % (User._meta.app_label, User._meta.object_name)})
         },
@@ -214,6 +222,7 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '150'}),
             'smart': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'source': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['sources.Source']", 'null': 'True', 'blank': 'True'}),
+            'tags': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '4000', 'null': 'True', 'blank': 'True'}),
             'title': ('django.db.models.fields.CharField', [], {'max_length': '140', 'db_index': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['%s.%s']" % (User._meta.app_label, User._meta.object_name)}),
             'valign': ('django.db.models.fields.CharField', [], {'default': 'False', 'max_length': '6', 'null': 'True', 'blank': 'True'})
@@ -239,19 +248,6 @@ class Migration(SchemaMigration):
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '150'}),
             'url': ('django.db.models.fields.URLField', [], {'max_length': '200', 'null': 'True', 'blank': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': u"orm['%s.%s']" % (User._meta.app_label, User._meta.object_name)})
-        },
-        u'taggit.tag': {
-            'Meta': {'object_name': 'Tag'},
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'name': ('django.db.models.fields.CharField', [], {'unique': 'True', 'max_length': '100'}),
-            'slug': ('django.db.models.fields.SlugField', [], {'unique': 'True', 'max_length': '100'})
-        },
-        u'taggit.taggeditem': {
-            'Meta': {'object_name': 'TaggedItem'},
-            'content_type': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'taggit_taggeditem_tagged_items'", 'to': u"orm['contenttypes.ContentType']"}),
-            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
-            'object_id': ('django.db.models.fields.IntegerField', [], {'db_index': 'True'}),
-            'tag': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "u'taggit_taggeditem_items'", 'to': u"orm['taggit.Tag']"})
         }
     }
 
