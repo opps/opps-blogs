@@ -14,7 +14,6 @@ class BlogList(ListView):
     channel_long_slug = []
     channel = None
     paginate_suffix = 'list'
-    context_object_name = 'blogs'
 
     def get_template_names(self):
         templates = super(BlogList, self).get_template_names()
