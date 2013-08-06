@@ -84,7 +84,7 @@ class BlogPostDetail(DetailView):
         domain_folder = self.get_template_folder()
         templates = ['{}/blogs/{}/{}.html'.format(
             domain_folder,
-            self.kwargs['blog__slug'],
+            self.long_slug,
             self.paginate_suffix
         ), '{}/blogs/{}.html'.format(
             domain_folder,
@@ -93,7 +93,7 @@ class BlogPostDetail(DetailView):
 
     def get_queryset(self):
         self.site = get_current_site(self.request)
-        self.long_slug = self.kwargs['blog__slug'],
+        self.long_slug = self.kwargs['blog__slug']
         self.article = self.model.objects.filter(
             site_domain=self.site.domain,
             blog__slug=self.long_slug,
