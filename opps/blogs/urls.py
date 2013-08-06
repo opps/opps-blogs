@@ -15,7 +15,7 @@ urlpatterns = patterns(
         name='blogpost-detail',
         kwargs={'channel__long_slug': settings.OPPS_BLOGS_CHANNEL}
     ),
-    url(r'^{}/(?P<channel__long_slug>[\w//-]+)/(?P<slug>[\w-]+)$'.format(
+    url(r'^{}/(?P<blog__slug>[\w//-]+)/(?P<slug>[\w-]+)$'.format(
         settings.OPPS_BLOGS_CHANNEL),
         cache_page(settings.OPPS_CACHE_EXPIRE)(BlogPostDetail.as_view()),
         name='blogpost-detail',
