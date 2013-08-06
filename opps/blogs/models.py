@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.db import models
-from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 
 from opps.core.models import NotUserPublishable, Slugged
 from opps.articles.models import Article
 from opps.images.models import Image
+
+from .conf import settings
 
 
 class Blog(NotUserPublishable, Slugged):
@@ -34,4 +35,5 @@ class BlogPost(Article):
         verbose_name_plural = _(u'Blog Posts')
 
     def get_absolute_url(self):
-        return u"/blogs/{}/{}/".format(self.blog.slug, self.slug)
+        return u"/{}/{}/{}".format(settings.OPPS_BLOGS_CHANNEL,
+                                    self.blog.slug, self.slug)
