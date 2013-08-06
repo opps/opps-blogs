@@ -44,7 +44,7 @@ class BlogUsersList(ListView):
         domain_folder = self.get_template_folder()
         templates = ['{}/blogs/{}/authors.html'.format(
             domain_folder,
-            self.kwargs['blog__slug'],
+            self.long_slug,
         ), '{}/blogs/authors.html'.format(
             domain_folder
         )] + templates
