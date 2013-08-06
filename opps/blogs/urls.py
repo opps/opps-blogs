@@ -28,6 +28,7 @@ urlpatterns = patterns(
     ),
     url(r'^{}/'.format(settings.OPPS_BLOGS_CHANNEL),
         cache_page(settings.OPPS_CACHE_EXPIRE)(BlogList.as_view()),
-        name='blog-list'
+        name='blog-list',
+        kwargs={'channel__long_slug': settings.OPPS_BLOGS_CHANNEL}
     ),
 )
