@@ -19,6 +19,30 @@ class BlogList(ListView):
     def get_template_names(self):
         templates = super(BlogList, self).get_template_names()
         domain_folder = self.get_template_folder()
+        templates = ['{}/blogs/blogs.html'.format(domain_folder)] + templates
+        print templates
+        return templates
+
+    def get_queryset(self):
+        self.site = get_current_site(self.request)
+        self.blogs = self.model.objects.filter(
+            site_domain=self.site.domain,
+            date_available__lte=timezone.now(),
+            published=True)
+
+        return self.blogs
+
+
+class BlogUsersList(ListView):
+    model = Blog
+    channel_long_slug = []
+    channel = None
+    paginate_suffix = 'list'
+    context_object_name = 'authors'
+
+    def get_template_names(self):
+        templates = super(BlogUsersList, self).get_template_names()
+        domain_folder = self.get_template_folder()
         templates = ['{}/blogs/{}/authors.html'.format(
             domain_folder,
             self.kwargs['blog__slug'],
@@ -36,8 +60,9 @@ class BlogList(ListView):
             slug=self.long_slug,
             date_available__lte=timezone.now(),
             published=True)
-
-        return self.blogs
+        if not self.blogs:
+            return []
+        return [i.user for i in self.blogs]
 
 
 class BlogPostList(ListView):
