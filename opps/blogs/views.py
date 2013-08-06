@@ -30,10 +30,10 @@ class BlogList(ListView):
 
     def get_queryset(self):
         self.site = get_current_site(self.request)
-        self.long_slug = None
+        self.long_slug = self.kwargs['blog__slug'],
         self.blogs = self.model.objects.filter(
             site_domain=self.site.domain,
-            slug=self.kwargs['blog__slug'],
+            slug=self.long_slug,
             date_available__lte=timezone.now(),
             published=True)
 
@@ -62,10 +62,10 @@ class BlogPostList(ListView):
 
     def get_queryset(self):
         self.site = get_current_site(self.request)
-        self.long_slug = None
+        self.long_slug = self.kwargs['blog__slug'],
         self.article = self.model.objects.filter(
             site_domain=self.site.domain,
-            blog__slug=self.kwargs['blog__slug'],
+            blog__slug=self.long_slug,
             date_available__lte=timezone.now(),
             published=True)
 
@@ -93,10 +93,10 @@ class BlogPostDetail(DetailView):
 
     def get_queryset(self):
         self.site = get_current_site(self.request)
-        self.long_slug = None
+        self.long_slug = self.kwargs['blog__slug'],
         self.article = self.model.objects.filter(
             site_domain=self.site.domain,
-            blog__slug=self.kwargs['blog__slug'],
+            blog__slug=self.long_slug,
             slug=self.kwargs['slug'],
             date_available__lte=timezone.now(),
             published=True)
