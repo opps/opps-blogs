@@ -2,17 +2,30 @@
 # -*- coding: utf-8 -*-
 from django.contrib.sites.models import get_current_site
 from django.utils import timezone
+from django.shortcuts import get_object_or_404
 
+from opps.channels.models import Channel
 from opps.views.generic.list import ListView
 from opps.views.generic.detail import DetailView
 
 from opps.blogs.models import BlogPost, Blog
 
+from .conf import settings
 
-class BlogList(ListView):
+
+class BaseListView(ListView):
+    def dispatch(self, request, *args, **kwargs):
+        self.site = get_current_site(request)
+        self.channel = get_object_or_404(Channel, 
+                                         slug=settings.OPPS_BLOGS_CHANNEL, 
+                                         site=self.site)
+
+        return super(BaseListView, self).dispatch(request, *args, **kwargs)
+
+
+class BlogList(BaseListView):
     model = Blog
     channel_long_slug = []
-    channel = None
     paginate_suffix = 'list'
 
     def get_template_names(self):
@@ -22,7 +35,6 @@ class BlogList(ListView):
         return templates
 
     def get_queryset(self):
-        self.site = get_current_site(self.request)
         self.long_slug = self.kwargs['channel__long_slug']
         self.blogs = self.model.objects.filter(
             site_domain=self.site.domain,
@@ -32,10 +44,9 @@ class BlogList(ListView):
         return self.blogs
 
 
-class BlogUsersList(ListView):
+class BlogUsersList(BaseListView):
     model = Blog
     channel_long_slug = []
-    channel = None
     paginate_suffix = 'list'
 
     def get_template_names(self):
@@ -50,8 +61,7 @@ class BlogUsersList(ListView):
         return templates
 
     def get_queryset(self):
-        self.site = get_current_site(self.request)
-        self.long_slug = self.kwargs['blog__slug'],
+        self.long_slug = self.kwargs['blog__slug']
         self.blogs = self.model.objects.filter(
             site_domain=self.site.domain,
             slug=self.long_slug,
@@ -62,11 +72,10 @@ class BlogUsersList(ListView):
         return [i.user for i in self.blogs]
 
 
-class BlogPostList(ListView):
+class BlogPostList(BaseListView):
     model = BlogPost
     type = "blogs"
     channel_long_slug = []
-    channel = None
     paginate_suffix = 'list'
 
     def get_template_names(self):
@@ -83,11 +92,11 @@ class BlogPostList(ListView):
         return templates
 
     def get_queryset(self):
-        self.site = get_current_site(self.request)
-        self.long_slug = self.kwargs['blog__slug'],
+        self.long_slug = self.kwargs['blog__slug']
+        self.blog_obj = get_object_or_404(Blog, slug=self.long_slug)
         self.article = self.model.objects.filter(
             site_domain=self.site.domain,
-            blog__slug=self.long_slug,
+            blog=self.blog_obj,
             date_available__lte=timezone.now(),
             published=True)
 
@@ -98,8 +107,15 @@ class BlogPostDetail(DetailView):
     model = BlogPost
     type = "blogs"
     channel_long_slug = []
-    channel = None
     paginate_suffix = 'detail'
+
+    def dispatch(self, request, *args, **kwargs):
+        self.site = get_current_site(request)
+        self.channel = get_object_or_404(Channel, 
+                                         slug=settings.OPPS_BLOGS_CHANNEL, 
+                                         site=self.site)
+
+        return super(BlogPostDetail, self).dispatch(request, *args, **kwargs)
 
     def get_template_names(self):
         templates = super(BlogPostDetail, self).get_template_names()
@@ -114,7 +130,6 @@ class BlogPostDetail(DetailView):
         return templates
 
     def get_queryset(self):
-        self.site = get_current_site(self.request)
         self.long_slug = self.kwargs['blog__slug']
         self.article = self.model.objects.filter(
             site_domain=self.site.domain,
