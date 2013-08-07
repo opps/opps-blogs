@@ -19,6 +19,10 @@ class Blog(NotUserPublishable, Slugged):
 
     __unicode__ = lambda self: self.name
 
+    def get_absolute_url(self):
+        return u"/{}/{}/".format(settings.OPPS_BLOGS_CHANNEL,
+                                    self.slug)
+
 
 class BlogPost(Article):
     blog = models.ForeignKey('blogs.Blog')
