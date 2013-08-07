@@ -25,7 +25,6 @@ class AdminBlogPermission(AdminViewPermission):
     def get_form(self, request, obj=None, **kwargs):
         form = super(AdminBlogPermission, self).get_form(request, obj,
                                                          **kwargs)
-        import pdb; pdb.set_trace()
         try:
             blogpermission = Blog.objects.filter(user=request.user)
             form.base_fields['blog'].choices = (
@@ -35,11 +34,10 @@ class AdminBlogPermission(AdminViewPermission):
         return form
 
     def has_add_permission(self, request):
-        try:
-            Blog.objects.filter(user=request.user)
-            return True
-        except Blog.DoesNotExist:
+        blogpermission = Blog.objects.filter(user=request.user)
+        if len(blogpermission) == 0:
             return False
+        return True
 
 
 @apply_opps_rules('blogs')
