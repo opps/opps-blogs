@@ -17,8 +17,8 @@ class AdminBlogPermission(AdminViewPermission):
     def queryset(self, request):
         queryset = super(AdminBlogPermission, self).queryset(request)
         try:
-            blogpermission = Blog.objects.get(user=request.user)
-            return queryset.filter(blog=blogpermission)
+            blogpermission = Blog.objects.filter(user=request.user)
+            return queryset.filter(blog__in=blogpermission)
         except Blog.DoesNotExist:
             return queryset.none()
 
