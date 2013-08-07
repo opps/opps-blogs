@@ -13,7 +13,14 @@ from .models import Blog, BlogPost
 
 
 class AdminBlogPermission(AdminViewPermission):
-    pass
+
+    def queryset(self, request):
+        queryset = super(AdminBlogPermission, self).queryset(request)
+        try:
+            blogpermission = Blog.objects.get(user=request.user)
+            return queryset.filter(blog=blogpermission)
+        except:
+            return queryset.none()
 
 
 @apply_opps_rules('blogs')
