@@ -22,6 +22,17 @@ class AdminBlogPermission(AdminViewPermission):
         except:
             return queryset.none()
 
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(AdminBlogPermission, self).get_form(request, obj,
+                                                         **kwargs)
+        try:
+            blogpermission = Blog.objects.get(user=request.user)
+            form.base_fields['blog'].choices = ((blogpermission.id,
+                                                 blogpermission.name),)
+        except:
+            pass
+        return form
+
 
 @apply_opps_rules('blogs')
 class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
@@ -43,19 +54,6 @@ class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
             'fields': ('published', 'date_available',
                        'show_on_root_channel', 'in_containerboxes')}),
     )
-
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(AdminViewPermission, self).get_form(request, obj,
-                                                         **kwargs)
-        try:
-            blog = Blog.objects.filter(user=request.user)
-            form.base_fields['blog'].choices = ((blog.id,
-                                                 blog.name),)
-        except:
-            pass
-
-        return form
 
 
 class BlogAdmin(admin.ModelAdmin):
