@@ -12,8 +12,12 @@ from .forms import BlogPostAdminForm
 from .models import Blog, BlogPost
 
 
+class AdminBlogPermission(AdminViewPermission):
+    pass
+
+
 @apply_opps_rules('blogs')
-class BlogPostAdmin(ContainerAdmin, AdminViewPermission):
+class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
     form = BlogPostAdminForm
     inlines = [ContainerImageInline, ContainerSourceInline]
     raw_id_fields = ['main_image', 'channel', 'albums']
