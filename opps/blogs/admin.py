@@ -19,7 +19,7 @@ class AdminBlogPermission(AdminViewPermission):
         try:
             blogpermission = Blog.objects.get(user=request.user)
             return queryset.filter(blog=blogpermission)
-        except:
+        except Blog.DoesNotExist:
             return queryset.none()
 
     def get_form(self, request, obj=None, **kwargs):
@@ -29,9 +29,16 @@ class AdminBlogPermission(AdminViewPermission):
             blogpermission = Blog.objects.get(user=request.user)
             form.base_fields['blog'].choices = ((blogpermission.id,
                                                  blogpermission.name),)
-        except:
+        except Blog.DoesNotExist:
             pass
         return form
+
+    def has_add_permission(self, request):
+        try:
+            Blog.objects.get(user=request.user)
+            return True
+        except Blog.DoesNotExist:
+            return False
 
 
 @apply_opps_rules('blogs')
