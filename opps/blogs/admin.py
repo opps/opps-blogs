@@ -12,8 +12,36 @@ from .forms import BlogPostAdminForm
 from .models import Blog, BlogPost
 
 
+class AdminBlogPermission(AdminViewPermission):
+
+    def queryset(self, request):
+        queryset = super(AdminBlogPermission, self).queryset(request)
+        try:
+            blogpermission = Blog.objects.filter(user=request.user)
+            return queryset.filter(blog__in=blogpermission)
+        except Blog.DoesNotExist:
+            return queryset.none()
+
+    def get_form(self, request, obj=None, **kwargs):
+        form = super(AdminBlogPermission, self).get_form(request, obj,
+                                                         **kwargs)
+        try:
+            blogpermission = Blog.objects.filter(user=request.user)
+            form.base_fields['blog'].choices = (
+                (b.id, b.name) for b in blogpermission)
+        except Blog.DoesNotExist:
+            pass
+        return form
+
+    def has_add_permission(self, request):
+        blogpermission = Blog.objects.filter(user=request.user)
+        if len(blogpermission) == 0:
+            return False
+        return True
+
+
 @apply_opps_rules('blogs')
-class BlogPostAdmin(ContainerAdmin, AdminViewPermission):
+class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
     form = BlogPostAdminForm
     inlines = [ContainerImageInline, ContainerSourceInline]
     raw_id_fields = ['main_image', 'channel', 'albums']
@@ -32,19 +60,6 @@ class BlogPostAdmin(ContainerAdmin, AdminViewPermission):
             'fields': ('published', 'date_available',
                        'show_on_root_channel', 'in_containerboxes')}),
     )
-
-
-    def get_form(self, request, obj=None, **kwargs):
-        form = super(AdminViewPermission, self).get_form(request, obj,
-                                                         **kwargs)
-        try:
-            blog = Blog.objects.filter(user=request.user)
-            form.base_fields['blog'].choices = ((blog.id,
-                                                 blog.name),)
-        except:
-            pass
-
-        return form
 
 
 class BlogAdmin(admin.ModelAdmin):
