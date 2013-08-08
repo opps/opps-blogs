@@ -14,7 +14,8 @@ class Blog(NotUserPublishable, Slugged):
 
     user = models.ManyToManyField(settings.AUTH_USER_MODEL)
     name = models.CharField(_(u"Name"), max_length=140)
-    main_image = models.ForeignKey(Image, verbose_name=_(u'Main Image'))
+    main_image = models.ForeignKey(Image, verbose_name=_(u'Main Image'),
+                                   blank=True, null=True)
     description = models.TextField(_(u'Description'), blank=True)
 
     __unicode__ = lambda self: self.name
