@@ -7,5 +7,7 @@ from appconf import AppConf
 
 class OppsBlogsConf(AppConf):
     CHANNEL = getattr(settings, 'OPPS_BLOGS_CHANNEL', 'blog')
+    PROFILE = getattr(settings, 'OPPS_BLOGS_PROFILE', False)
+
     class Meta:
         prefix = 'opps_blogs'

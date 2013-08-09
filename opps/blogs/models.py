@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.db.models import get_model
 from django.utils.translation import ugettext_lazy as _
+from django.core.exceptions import ImproperlyConfigured
 
 from opps.core.models import NotUserPublishable, Slugged
 from opps.articles.models import Article
@@ -23,6 +25,24 @@ class Blog(NotUserPublishable, Slugged):
     def get_absolute_url(self):
         return u"/{}/{}/".format(settings.OPPS_BLOGS_CHANNEL,
                                     self.slug)
+
+    def get_profile(self):
+        if not settings.OPPS_BLOGS_PROFILE:
+            raise ImproperlyConfigured(_('OPPS_BLOG_PROFILE was not found on'
+                                         ' settings'))
+        try:
+            app_label, model_name = settings.OPPS_BLOGS_PROFILE.split('.')
+        except ValueError:
+            raise ImproperlyConfigured(_('OPPS_BLOGS_PROFILE must be of the'
+                                         ' form "app_label.model_name"'))
+
+        Profile = get_model(app_label, model_name)
+        if Profile is None:
+            raise ImproperlyConfigured("OPPS_BLOGS_PROFILE refers to model"
+                                       " '%s' that has not been installed" %
+                                       settings.OPPS_BLOGS_PROFILE)
+
+        return Profile.objects.get(blog=self)
 
 
 class BlogPost(Article):
