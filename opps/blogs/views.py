@@ -26,7 +26,7 @@ class BaseListView(ListView):
         context = super(BaseListView, self).get_context_data(**kwargs)
 
         if 'blog__slug' in self.kwargs.keys():
-            context['blog'] = get_object_or_404(Blog, 
+            context['blog'] = get_object_or_404(Blog,
                                                 slug=self.kwargs['blog__slug'])
 
         return context
@@ -130,7 +130,7 @@ class BlogPostDetail(DetailView):
         context = super(BlogPostDetail, self).get_context_data(**kwargs)
 
         if 'blog__slug' in self.kwargs.keys():
-            context['blog'] = get_object_or_404(Blog, 
+            context['blog'] = get_object_or_404(Blog,
                                                 slug=self.kwargs['blog__slug'])
 
         return context
