@@ -16,8 +16,8 @@ from .conf import settings
 class BaseListView(ListView):
     def dispatch(self, request, *args, **kwargs):
         self.site = get_current_site(request)
-        self.channel = get_object_or_404(Channel, 
-                                         slug=settings.OPPS_BLOGS_CHANNEL, 
+        self.channel = get_object_or_404(Channel,
+                                         slug=settings.OPPS_BLOGS_CHANNEL,
                                          site=self.site)
 
         return super(BaseListView, self).dispatch(request, *args, **kwargs)
@@ -111,8 +111,8 @@ class BlogPostDetail(DetailView):
 
     def dispatch(self, request, *args, **kwargs):
         self.site = get_current_site(request)
-        self.channel = get_object_or_404(Channel, 
-                                         slug=settings.OPPS_BLOGS_CHANNEL, 
+        self.channel = get_object_or_404(Channel,
+                                         slug=settings.OPPS_BLOGS_CHANNEL,
                                          site=self.site)
 
         return super(BlogPostDetail, self).dispatch(request, *args, **kwargs)
