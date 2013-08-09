@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.db.models import get_model
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured
@@ -62,3 +64,20 @@ class BlogPost(Article):
     def get_absolute_url(self):
         return u"/{}/{}/{}".format(settings.OPPS_BLOGS_CHANNEL,
                                     self.blog.slug, self.slug)
+
+
+@receiver(post_save, sender=Blog)
+def create_blog_profile(sender, **kwargs):
+    if not settings.OPPS_BLOGS_PROFILE:
+        return
+    if not kwargs.get('created'):
+        return
+
+    try:
+        app_label, model_name = settings.OPPS_BLOGS_PROFILE.split('.')
+    except ValueError:
+        return
+
+    instance = kwargs.get('instance')
+    Profile = get_model(app_label, model_name)
+    Profile.objects.create(blog=instance)
