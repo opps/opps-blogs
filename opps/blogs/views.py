@@ -22,6 +22,15 @@ class BaseListView(ListView):
 
         return super(BaseListView, self).dispatch(request, *args, **kwargs)
 
+    def get_context_data(self, **kwargs):
+        context = super(BaseListView, self).get_context_data(**kwargs)
+
+        if 'blog__slug' in self.kwargs.keys():
+            context['blog'] = get_object_or_404(Blog, 
+                                                slug=self.kwargs['blog__slug'])
+
+        return context
+
 
 class BlogList(BaseListView):
     model = Blog
@@ -116,6 +125,15 @@ class BlogPostDetail(DetailView):
                                          site=self.site)
 
         return super(BlogPostDetail, self).dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogPostDetail, self).get_context_data(**kwargs)
+
+        if 'blog__slug' in self.kwargs.keys():
+            context['blog'] = get_object_or_404(Blog, 
+                                                slug=self.kwargs['blog__slug'])
+
+        return context
 
     def get_template_names(self):
         templates = super(BlogPostDetail, self).get_template_names()
