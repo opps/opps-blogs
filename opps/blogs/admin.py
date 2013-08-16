@@ -101,6 +101,7 @@ class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
         super(BlogPostAdmin, self).save_model(request, obj, form, change)
 
 
+@apply_opps_rules('blogs')
 class BlogAdmin(admin.ModelAdmin):
     prepopulated_fields = {"slug": ["name"]}
     filter_horizontal = ('user',)
