@@ -10,6 +10,7 @@ from django.core.exceptions import ImproperlyConfigured
 from opps.core.models import NotUserPublishable, Slugged
 from opps.articles.models import Article
 from opps.images.models import Image
+from opps.multimedias.models import Audio, Video
 
 from .conf import settings
 
@@ -56,7 +57,10 @@ class BlogPost(Article):
         related_name='blogpoast_albums',
         verbose_name=_(u"Albums")
     )
-
+    videos = models.ManyToManyField(Video, blank=True, null=True,
+                                    through='BlogPostVideo')
+    audios = models.ManyToManyField(Audio, blank=True, null=True,
+                                    through='BlogPostAudio')
     class Meta:
         verbose_name = _(u'Blog post')
         verbose_name_plural = _(u'Blog Posts')
@@ -64,6 +68,31 @@ class BlogPost(Article):
     def get_absolute_url(self):
         return u"/{}/{}/{}".format(settings.OPPS_BLOGS_CHANNEL,
                                     self.blog.slug, self.slug)
+
+
+class BlogPostVideo(models.Model):
+    blogpost = models.ForeignKey('blogs.BlogPost', null=True, blank=True,
+                                 verbose_name=_(u'Blog'),
+                                 on_delete=models.SET_NULL)
+    video = models.ForeignKey(Video, null=True, blank=True,
+                              verbose_name=_(u'Video'),
+                              on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _(u'Blogpost Video')
+        verbose_name_plural = _(u'Blogpost Videos')
+
+
+class BlogPostAudio(models.Model):
+    blogpost = models.ForeignKey('blogs.BlogPost', null=True, blank=True,
+                                 verbose_name=_(u'Blog'),
+                                 on_delete=models.SET_NULL)
+    audio = models.ForeignKey(Audio, verbose_name=_(u'Audio'), null=True,
+                              blank=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = _(u'Blogpost Audio')
+        verbose_name_plural = _(u'Blogpost Audios')
 
 
 @receiver(post_save, sender=Blog)
