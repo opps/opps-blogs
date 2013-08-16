@@ -11,29 +11,26 @@ User = get_user_model()
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'BlogPostAudio'
-        db.create_table(u'blogs_blogpostaudio', (
+        # Adding model 'BlogLink'
+        db.create_table(u'blogs_bloglink', (
             (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('blogpost', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['blogs.BlogPost'], null=True, on_delete=models.SET_NULL, blank=True)),
-            ('audio', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['multimedias.Audio'], null=True, on_delete=models.SET_NULL, blank=True)),
+            ('date_insert', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
+            ('date_update', self.gf('django.db.models.fields.DateTimeField')(auto_now=True, blank=True)),
+            ('site', self.gf('django.db.models.fields.related.ForeignKey')(default=1, to=orm['sites.Site'])),
+            ('site_iid', self.gf('django.db.models.fields.PositiveIntegerField')(db_index=True, max_length=4, null=True, blank=True)),
+            ('site_domain', self.gf('django.db.models.fields.CharField')(db_index=True, max_length=100, null=True, blank=True)),
+            ('date_available', self.gf('django.db.models.fields.DateTimeField')(default=datetime.datetime.now, null=True, db_index=True)),
+            ('published', self.gf('django.db.models.fields.BooleanField')(default=False, db_index=True)),
+            ('blog', self.gf('django.db.models.fields.related.ForeignKey')(related_name='links', to=orm['blogs.Blog'])),
+            ('name', self.gf('django.db.models.fields.CharField')(max_length=140)),
+            ('link', self.gf('django.db.models.fields.URLField')(max_length=200)),
         ))
-        db.send_create_signal(u'blogs', ['BlogPostAudio'])
-
-        # Adding model 'BlogPostVideo'
-        db.create_table(u'blogs_blogpostvideo', (
-            (u'id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('blogpost', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['blogs.BlogPost'], null=True, on_delete=models.SET_NULL, blank=True)),
-            ('video', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['multimedias.Video'], null=True, on_delete=models.SET_NULL, blank=True)),
-        ))
-        db.send_create_signal(u'blogs', ['BlogPostVideo'])
+        db.send_create_signal(u'blogs', ['BlogLink'])
 
 
     def backwards(self, orm):
-        # Deleting model 'BlogPostAudio'
-        db.delete_table(u'blogs_blogpostaudio')
-
-        # Deleting model 'BlogPostVideo'
-        db.delete_table(u'blogs_blogpostvideo')
+        # Deleting model 'BlogLink'
+        db.delete_table(u'blogs_bloglink')
 
 
     models = {
@@ -90,6 +87,20 @@ class Migration(SchemaMigration):
             'site_iid': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True', 'max_length': '4', 'null': 'True', 'blank': 'True'}),
             'slug': ('django.db.models.fields.SlugField', [], {'max_length': '150'}),
             'user': ('django.db.models.fields.related.ManyToManyField', [], {'to': u"orm['%s.%s']" % (User._meta.app_label, User._meta.object_name), 'symmetrical': 'False'})
+        },
+        u'blogs.bloglink': {
+            'Meta': {'object_name': 'BlogLink'},
+            'blog': ('django.db.models.fields.related.ForeignKey', [], {'related_name': "'links'", 'to': u"orm['blogs.Blog']"}),
+            'date_available': ('django.db.models.fields.DateTimeField', [], {'default': 'datetime.datetime.now', 'null': 'True', 'db_index': 'True'}),
+            'date_insert': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'date_update': ('django.db.models.fields.DateTimeField', [], {'auto_now': 'True', 'blank': 'True'}),
+            u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
+            'link': ('django.db.models.fields.URLField', [], {'max_length': '200'}),
+            'name': ('django.db.models.fields.CharField', [], {'max_length': '140'}),
+            'published': ('django.db.models.fields.BooleanField', [], {'default': 'False', 'db_index': 'True'}),
+            'site': ('django.db.models.fields.related.ForeignKey', [], {'default': '1', 'to': u"orm['sites.Site']"}),
+            'site_domain': ('django.db.models.fields.CharField', [], {'db_index': 'True', 'max_length': '100', 'null': 'True', 'blank': 'True'}),
+            'site_iid': ('django.db.models.fields.PositiveIntegerField', [], {'db_index': 'True', 'max_length': '4', 'null': 'True', 'blank': 'True'})
         },
         u'blogs.blogpost': {
             'Meta': {'object_name': 'BlogPost'},
