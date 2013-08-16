@@ -38,6 +38,7 @@ if not settings.configured:
             'opps.containers',
             'opps.archives',
             'opps.flatpages',
+            'opps.multimedias',
 
             'opps.blogs',
 
