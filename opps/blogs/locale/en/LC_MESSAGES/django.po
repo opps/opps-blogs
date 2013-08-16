@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-08 22:19-0300\n"
+"POT-Creation-Date: 2013-08-16 16:23-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,83 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:50 admin.py:72
+#: admin.py:77 admin.py:111
 msgid "Identification"
 msgstr ""
 
-#: admin.py:53 models.py:50
+#: admin.py:80 models.py:53
 msgid "Content"
 msgstr ""
 
-#: admin.py:56
+#: admin.py:83
 msgid "Relationships"
 msgstr ""
 
-#: admin.py:58 admin.py:75
+#: admin.py:85 admin.py:114
 msgid "Publication"
 msgstr ""
 
-#: models.py:18
-msgid "Name"
-msgstr ""
-
-#: models.py:19
-msgid "Main Image"
+#: admin.py:97
+#, python-format
+msgid "%s channel is not created"
 msgstr ""
 
 #: models.py:21
+msgid "Name"
+msgstr ""
+
+#: models.py:22
+msgid "Main Image"
+msgstr ""
+
+#: models.py:24
 msgid "Description"
 msgstr ""
 
-#: models.py:31
+#: models.py:34
 msgid "OPPS_BLOG_PROFILE was not found on settings"
 msgstr ""
 
-#: models.py:36
+#: models.py:39
 msgid "OPPS_BLOGS_PROFILE must be of the form \"app_label.model_name\""
 msgstr ""
 
-#: models.py:55
+#: models.py:58
 msgid "Albums"
 msgstr ""
 
-#: models.py:59
+#: models.py:66
 msgid "Blog post"
 msgstr ""
 
-#: models.py:60
+#: models.py:67
 msgid "Blog Posts"
+msgstr ""
+
+#: models.py:76 models.py:89
+msgid "Blog"
+msgstr ""
+
+#: models.py:79
+msgid "Video"
+msgstr ""
+
+#: models.py:83
+msgid "Blogpost Video"
+msgstr ""
+
+#: models.py:84
+msgid "Blogpost Videos"
+msgstr ""
+
+#: models.py:91
+msgid "Audio"
+msgstr ""
+
+#: models.py:95
+msgid "Blogpost Audio"
+msgstr ""
+
+#: models.py:96
+msgid "Blogpost Audios"
 msgstr ""
