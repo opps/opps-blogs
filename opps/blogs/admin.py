@@ -7,9 +7,12 @@ from opps.core.admin import apply_opps_rules
 from opps.contrib.multisite.admin import AdminViewPermission
 from opps.containers.admin import ContainerSourceInline, ContainerImageInline
 from opps.containers.admin import ContainerAdmin
+from opps.channels.models import Channel
 
 from .forms import BlogPostAdminForm
-from .models import Blog, BlogPost
+from .models import Blog, BlogPost, BlogPostAudio, BlogPostVideo
+
+from .conf import settings
 
 
 class AdminBlogPermission(AdminViewPermission):
@@ -41,9 +44,32 @@ class AdminBlogPermission(AdminViewPermission):
 
 
 @apply_opps_rules('blogs')
+class BlogPostAudioInline(admin.StackedInline):
+    model = BlogPostAudio
+    raw_id_fields = ['audio']
+    actions = None
+    extra = 1
+    fieldsets = [(None, {
+        'classes': ('collapse',),
+        'fields': ('audio',)})]
+
+
+@apply_opps_rules('blogs')
+class BlogPostVideoInline(admin.StackedInline):
+    model = BlogPostVideo
+    raw_id_fields = ['video']
+    actions = None
+    extra = 1
+    fieldsets = [(None, {
+        'classes': ('collapse',),
+        'fields': ('video',)})]
+
+
+@apply_opps_rules('blogs')
 class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
     form = BlogPostAdminForm
-    inlines = [ContainerImageInline, ContainerSourceInline]
+    inlines = [ContainerImageInline, ContainerSourceInline,
+               BlogPostAudioInline, BlogPostVideoInline]
     raw_id_fields = ['main_image', 'channel', 'albums']
 
     fieldsets = (
