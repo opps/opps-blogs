@@ -71,6 +71,7 @@ class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
     inlines = [ContainerImageInline, ContainerSourceInline,
                BlogPostAudioInline, BlogPostVideoInline]
     raw_id_fields = ['main_image', 'channel', 'albums']
+    list_display = ['title', 'published', 'get_http_absolute_url']
 
     fieldsets = (
         (_(u'Identification'), {
