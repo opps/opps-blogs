@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-16 16:23-0300\n"
+"POT-Creation-Date: 2013-08-16 18:55-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:77 admin.py:111
+#: admin.py:77 admin.py:112 admin.py:126
 msgid "Identification"
 msgstr ""
 
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Relationships"
 msgstr ""
 
-#: admin.py:85 admin.py:114
+#: admin.py:85 admin.py:115 admin.py:128
 msgid "Publication"
 msgstr ""
 
@@ -38,7 +38,7 @@ msgstr ""
 msgid "%s channel is not created"
 msgstr ""
 
-#: models.py:21
+#: models.py:21 models.py:101
 msgid "Name"
 msgstr ""
 
@@ -96,4 +96,16 @@ msgstr ""
 
 #: models.py:96
 msgid "Blogpost Audios"
+msgstr ""
+
+#: models.py:102
+msgid "Link"
+msgstr ""
+
+#: models.py:107
+msgid "Blog Link"
+msgstr ""
+
+#: models.py:108
+msgid "Blog Links"
 msgstr ""
