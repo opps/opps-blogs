@@ -72,7 +72,7 @@ class Migration(SchemaMigration):
             u'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'name': ('django.db.models.fields.CharField', [], {'max_length': '50'})
         },
-        u'%s.%s': {
+        u'%s.%s' % (User._meta.app_label, User._meta.module_name): {
             'Meta': {'object_name': User.__name__},
         },
         u'blogs.blog': {
