@@ -10,7 +10,7 @@ from opps.containers.admin import ContainerAdmin
 from opps.channels.models import Channel
 
 from .forms import BlogPostAdminForm
-from .models import Blog, BlogPost, BlogPostAudio, BlogPostVideo
+from .models import Blog, BlogPost, BlogPostAudio, BlogPostVideo, BlogLink
 
 from .conf import settings
 
@@ -117,5 +117,19 @@ class BlogAdmin(admin.ModelAdmin):
     )
 
 
+@apply_opps_rules('blogs')
+class BlogLinkAdmin(AdminBlogPermission):
+    list_display = ['name', 'link', 'published']
+
+    fieldsets = (
+        (_(u'Identification'), {
+            'fields': ('blog', 'name', 'link')}),
+        (_(u'Publication'), {
+            'classes': ('extrapretty'),
+            'fields': ('published',)}),
+    )
+
+
 admin.site.register(BlogPost, BlogPostAdmin)
 admin.site.register(Blog, BlogAdmin)
+admin.site.register(BlogLink, BlogLinkAdmin)
