@@ -47,6 +47,9 @@ class Blog(NotUserPublishable, Slugged):
 
         return Profile.objects.get(blog=self)
 
+    def get_links(self):
+        return self.links.filter(published=True)
+
 
 class BlogPost(Article):
     blog = models.ForeignKey('blogs.Blog')
