@@ -80,12 +80,24 @@ class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
             'fields': ('hat', 'short_title', 'headline', 'content',
                        ('main_image', 'image_thumb'), 'tags')}),
         (_(u'Relationships'), {
-            'fields': ('channel', 'albums',)}),
+            'fields': ('albums',)}),
         (_(u'Publication'), {
             'classes': ('extrapretty'),
             'fields': ('published', 'date_available',
                        'show_on_root_channel', 'in_containerboxes')}),
     )
+
+    def save_model(self, request, obj, form, change):
+        try:
+            obj.channel = Channel.objects.get(
+                slug=settings.OPPS_BLOGS_CHANNEL
+            )
+        except Channel.DoesNotExist:
+            raise Channel.DoesNotExist(_(u'%s channel is not created') % (
+                settings.OPPS_BLOGS_CHANNELS)
+            )
+
+        super(BlogPostAdmin, self).save_model(request, obj, form, change)
 
 
 class BlogAdmin(admin.ModelAdmin):

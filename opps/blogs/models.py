@@ -61,6 +61,7 @@ class BlogPost(Article):
                                     through='BlogPostVideo')
     audios = models.ManyToManyField(Audio, blank=True, null=True,
                                     through='BlogPostAudio')
+
     class Meta:
         verbose_name = _(u'Blog post')
         verbose_name_plural = _(u'Blog Posts')
