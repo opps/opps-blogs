@@ -35,9 +35,10 @@ class Migration(SchemaMigration):
         db.create_table(m2m_table_name, (
             ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
             ('blog', models.ForeignKey(orm[u'blogs.blog'], null=False)),
-            (User._meta.module_name, models.ForeignKey(orm["%s.%s" % (User._meta.app_label, User._meta.object_name)], null=False))
+            ('user', models.ForeignKey(orm["%s.%s" % (User._meta.app_label, User._meta.object_name)], null=False))
         ))
-        db.create_unique(m2m_table_name, ['blog_id', 'customuser_id'])
+
+        db.create_unique(m2m_table_name, ['blog_id', 'user_id'])
 
         # Adding model 'BlogPost'
         db.create_table(u'blogs_blogpost', (
