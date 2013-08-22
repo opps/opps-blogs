@@ -48,7 +48,8 @@ class Category(MPTTModel, NotUserPublishable, Slugged):
         return u"/{}/".format(self.slug)
 
     def get_absolute_url(self):
-        return u"{}".format(self.__unicode__())
+        return u"/{}/{}{}".format(settings.OPPS_BLOGS_CHANNEL, self.blog.slug,
+                               self.__unicode__())
 
     @property
     def root(self):
