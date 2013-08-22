@@ -174,18 +174,6 @@ class BlogPostAudio(models.Model):
         verbose_name_plural = _(u'Blogpost Audios')
 
 
-class BlogLink(NotUserPublishable):
-    blog = models.ForeignKey('blogs.Blog', related_name='links')
-    name = models.CharField(_(u"Name"), max_length=140)
-    link = models.URLField(_('Link'))
-
-    __unicode__ = lambda self: u"{} - {}".format(self.name, self.link)
-
-    class Meta:
-        verbose_name = _(u'Blog Link')
-        verbose_name_plural = _(u'Blog Links')
-
-
 @receiver(post_save, sender=Blog)
 def create_blog_profile(sender, **kwargs):
     if not settings.OPPS_BLOGS_PROFILE:
