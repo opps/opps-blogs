@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-16 18:55-0300\n"
+"POT-Creation-Date: 2013-08-22 17:15-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,95 +17,123 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:77 admin.py:112 admin.py:126
+#: admin.py:86 admin.py:122 admin.py:141 admin.py:185
 msgid "Identification"
 msgstr ""
 
-#: admin.py:80 models.py:53
+#: admin.py:89 models.py:120
 msgid "Content"
 msgstr ""
 
-#: admin.py:83
+#: admin.py:92
 msgid "Relationships"
 msgstr ""
 
-#: admin.py:85 admin.py:115 admin.py:128
+#: admin.py:94 admin.py:125 admin.py:145 admin.py:187
 msgid "Publication"
 msgstr ""
 
-#: admin.py:97
+#: admin.py:107
 #, python-format
 msgid "%s channel is not created"
 msgstr ""
 
-#: models.py:21 models.py:101
+#: models.py:23 models.py:76 models.py:150
 msgid "Name"
 msgstr ""
 
-#: models.py:22
-msgid "Main Image"
+#: models.py:24
+msgid "Path name"
 msgstr ""
 
-#: models.py:24
-msgid "Description"
+#: models.py:26
+msgid "Show in menu?"
+msgstr ""
+
+#: models.py:27
+msgid "Group sub-channel?"
+msgstr ""
+
+#: models.py:28
+msgid "Order"
 msgstr ""
 
 #: models.py:34
-msgid "OPPS_BLOG_PROFILE was not found on settings"
+msgid "Category"
 msgstr ""
 
-#: models.py:39
-msgid "OPPS_BLOGS_PROFILE must be of the form \"app_label.model_name\""
+#: models.py:35
+msgid "Categories"
 msgstr ""
 
-#: models.py:58
-msgid "Albums"
-msgstr ""
-
-#: models.py:66
-msgid "Blog post"
-msgstr ""
-
-#: models.py:67
-msgid "Blog Posts"
-msgstr ""
-
-#: models.py:76 models.py:89
-msgid "Blog"
+#: models.py:77
+msgid "Main Image"
 msgstr ""
 
 #: models.py:79
-msgid "Video"
+msgid "Description"
 msgstr ""
 
-#: models.py:83
-msgid "Blogpost Video"
-msgstr ""
-
-#: models.py:84
-msgid "Blogpost Videos"
+#: models.py:80
+msgid "Blog Type"
 msgstr ""
 
 #: models.py:91
-msgid "Audio"
-msgstr ""
-
-#: models.py:95
-msgid "Blogpost Audio"
+msgid "OPPS_BLOG_PROFILE was not found on settings"
 msgstr ""
 
 #: models.py:96
-msgid "Blogpost Audios"
+msgid "OPPS_BLOGS_PROFILE must be of the form \"app_label.model_name\""
 msgstr ""
 
-#: models.py:102
+#: models.py:126
+msgid "Albums"
+msgstr ""
+
+#: models.py:134
+msgid "Blog post"
+msgstr ""
+
+#: models.py:135
+msgid "Blog Posts"
+msgstr ""
+
+#: models.py:151
 msgid "Link"
 msgstr ""
 
-#: models.py:107
+#: models.py:156
 msgid "Blog Link"
 msgstr ""
 
-#: models.py:108
+#: models.py:157
 msgid "Blog Links"
+msgstr ""
+
+#: models.py:162 models.py:175
+msgid "Blog"
+msgstr ""
+
+#: models.py:165
+msgid "Video"
+msgstr ""
+
+#: models.py:169
+msgid "Blogpost Video"
+msgstr ""
+
+#: models.py:170
+msgid "Blogpost Videos"
+msgstr ""
+
+#: models.py:177
+msgid "Audio"
+msgstr ""
+
+#: models.py:181
+msgid "Blogpost Audio"
+msgstr ""
+
+#: models.py:182
+msgid "Blogpost Audios"
 msgstr ""
