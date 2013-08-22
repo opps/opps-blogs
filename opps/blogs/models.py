@@ -19,7 +19,7 @@ from .conf import settings
 
 
 class Category(MPTTModel, NotUserPublishable, Slugged):
-    blog = models.ForeignKey('blogs.Blog', related_name='blogs')
+    blog = models.ForeignKey('blogs.Blog', related_name='categories')
     name = models.CharField(_(u"Name"), max_length=140)
     long_slug = models.SlugField(_(u"Path name"), max_length=250,
                                  db_index=True)
