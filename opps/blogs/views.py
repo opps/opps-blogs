@@ -9,7 +9,6 @@ from opps.views.generic.list import ListView
 from opps.views.generic.detail import DetailView
 
 from opps.blogs.models import BlogPost, Blog
-
 from .conf import settings
 
 
@@ -24,11 +23,9 @@ class BaseListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(BaseListView, self).get_context_data(**kwargs)
-
         if 'blog__slug' in self.kwargs.keys():
             context['blog'] = get_object_or_404(Blog,
                                                 slug=self.kwargs['blog__slug'])
-
         return context
 
 
@@ -112,10 +109,25 @@ class BlogPostList(BaseListView):
         return self.article
 
 
+class CategoryList(BaseListView):
+    model = BlogPost
+
+    def get_queryset(self):
+        self.long_slug = self.kwargs['blog__slug']
+        self.category_long_slug = self.kwargs['category_long_slug']
+        self.blog_obj = get_object_or_404(Blog, slug=self.long_slug)
+        self.article = self.model.objects.filter(
+            site_domain=self.site.domain,
+            blog=self.blog_obj,
+            category__long_slug=self.category_long_slug,
+            date_available__lte=timezone.now(),
+            published=True)
+
+        return self.article
+
+
 class BlogPostDetail(DetailView):
     model = BlogPost
-    type = "blogs"
-    channel_long_slug = []
     paginate_suffix = 'detail'
 
     def dispatch(self, request, *args, **kwargs):
@@ -149,10 +161,16 @@ class BlogPostDetail(DetailView):
 
     def get_queryset(self):
         self.long_slug = self.kwargs['blog__slug']
-        self.article = self.model.objects.filter(
+        self.category_long_slug = self.kwargs['category_long_slug']
+        lookups = dict(
             site_domain=self.site.domain,
             blog__slug=self.long_slug,
             slug=self.kwargs['slug'],
-            date_available__lte=timezone.now(),
-            published=True)
+            published=True,
+            date_available__lte=timezone.now()
+        )
+        if not self.category_long_slug == 'sem-categoria':
+            lookups['category__long_slug'] = self.category_long_slug
+
+        self.article = self.model.objects.filter(**lookups)
         return self.article

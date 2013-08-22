@@ -6,6 +6,9 @@ from django.dispatch import receiver
 from django.db.models import get_model
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import ValidationError
+
+from mptt.models import MPTTModel, TreeForeignKey
 
 from opps.core.models import NotUserPublishable, Slugged
 from opps.articles.models import Article
@@ -13,6 +16,58 @@ from opps.images.models import Image
 from opps.multimedias.models import Audio, Video
 
 from .conf import settings
+
+
+class Category(MPTTModel, NotUserPublishable, Slugged):
+    blog = models.ForeignKey('blogs.Blog', related_name='blogs')
+    name = models.CharField(_(u"Name"), max_length=140)
+    long_slug = models.SlugField(_(u"Path name"), max_length=250,
+                                 db_index=True)
+    show_in_menu = models.BooleanField(_(u"Show in menu?"), default=False)
+    group = models.BooleanField(_(u"Group sub-channel?"), default=False)
+    order = models.IntegerField(_(u"Order"), default=0)
+    parent = TreeForeignKey('self', related_name='subchannel',
+                            null=True, blank=True)
+
+    class Meta:
+        unique_together = ("site", "long_slug", "slug", "parent")
+        verbose_name = _('Category')
+        verbose_name_plural = _('Categories')
+        ordering = ['name', 'parent__id', 'published']
+
+    class MPTTMeta:
+        unique_together = ("site", "long_slug", "slug", "parent")
+        order_insertion_by = ['order', 'name']
+
+    def __unicode__(self):
+        """ Uniform resource identifier
+        http://en.wikipedia.org/wiki/Uniform_resource_identifier
+        """
+        if self.parent:
+            return u"/{}/{}/".format(self.parent.slug, self.slug)
+        return u"/{}/".format(self.slug)
+
+    def get_absolute_url(self):
+        return u"{}".format(self.__unicode__())
+
+    @property
+    def root(self):
+        return self.get_root()
+
+    def clean(self):
+        category_exists = Category.objects.filter(
+            slug=self.slug, site=self.site, blog=self.blog)
+
+        if category_exists.exists() and not self.pk:
+            raise ValidationError('Slug exist in domain!')
+
+        super(Category, self).clean()
+
+    def save(self, *args, **kwargs):
+        self.long_slug = u"{}".format(self.slug)
+        if self.parent:
+            self.long_slug = u"{}/{}".format(self.parent.slug, self.slug)
+        super(Category, self).save(*args, **kwargs)
 
 
 class Blog(NotUserPublishable, Slugged):
@@ -54,6 +109,7 @@ class Blog(NotUserPublishable, Slugged):
 class BlogPost(Article):
     blog = models.ForeignKey('blogs.Blog')
     content = models.TextField(_(u"Content"))
+    category = models.ForeignKey('blogs.Category', blank=True, null=True)
     albums = models.ManyToManyField(
         'articles.Album',
         null=True, blank=True,
@@ -70,8 +126,26 @@ class BlogPost(Article):
         verbose_name_plural = _(u'Blog Posts')
 
     def get_absolute_url(self):
-        return u"/{}/{}/{}".format(settings.OPPS_BLOGS_CHANNEL,
-                                    self.blog.slug, self.slug)
+        try:
+            category = self.category
+            slug = category.long_slug
+        except AttributeError:
+            slug = 'sem-categoria'
+
+        return u"/{}/{}/{}/{}/".format(settings.OPPS_BLOGS_CHANNEL,
+                                       self.blog.slug, slug, self.slug)
+
+
+class BlogLink(NotUserPublishable):
+    blog = models.ForeignKey('blogs.Blog', related_name='links')
+    name = models.CharField(_(u"Name"), max_length=140)
+    link = models.URLField(_('Link'))
+
+    __unicode__ = lambda self: u"{} - {}".format(self.name, self.link)
+
+    class Meta:
+        verbose_name = _(u'Blog Link')
+        verbose_name_plural = _(u'Blog Links')
 
 
 class BlogPostVideo(models.Model):

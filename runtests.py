@@ -41,6 +41,7 @@ if not settings.configured:
             'opps.multimedias',
 
             'opps.blogs',
+            'south',
 
         ),
         SITE_ID = 1,
@@ -55,7 +56,8 @@ if not settings.configured:
 
 
 def runtests():
-    argv = [sys.argv[0], 'test', 'blogs']
+    #argv = [sys.argv[0], 'test', 'blogs']
+    argv = [sys.argv[0], 'schemamigration', '--auto', 'blogs']
     execute_from_command_line(argv)
     sys.exit(0)
 
