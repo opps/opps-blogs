@@ -51,6 +51,7 @@ class AdminBlogPermission(AdminViewPermission):
             return False
         return True
 
+
 @apply_opps_rules('blogs')
 class BlogPostAudioInline(admin.StackedInline):
     model = BlogPostAudio
