@@ -71,12 +71,13 @@ class Category(MPTTModel, NotUserPublishable, Slugged):
 
 
 class Blog(NotUserPublishable, Slugged):
-
     user = models.ManyToManyField(settings.AUTH_USER_MODEL)
     name = models.CharField(_(u"Name"), max_length=140)
     main_image = models.ForeignKey(Image, verbose_name=_(u'Main Image'),
                                    blank=True, null=True)
     description = models.TextField(_(u'Description'), blank=True)
+    type = models.CharField(_(u'Blog Type'), max_length=200,
+                            choices=settings.OPPS_BLOGS_TYPES)
 
     __unicode__ = lambda self: self.name
 

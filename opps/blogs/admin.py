@@ -119,12 +119,13 @@ class BlogAdmin(admin.ModelAdmin):
 
     fieldsets = (
         (_(u'Identification'), {
-            'fields': ('site', 'name', 'slug', 'description', 'main_image',
-                       'user')}),
+            'fields': ('site', 'type', 'name', 'slug', 'description',
+                       'main_image', 'user')}),
         (_(u'Publication'), {
             'classes': ('extrapretty'),
             'fields': ('published', 'date_available')}),
     )
+
 
 class CategoryAdmin(PublishableAdmin):
     prepopulated_fields = {"slug": ("name",)}
