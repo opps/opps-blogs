@@ -104,8 +104,15 @@ class Blog(NotUserPublishable, Slugged):
 
         return Profile.objects.get(blog=self)
 
+    # Template helpers  - Perhaps a templatetag should be better?
     def get_links(self):
         return self.links.filter(published=True)
+
+    def get_categories(self):
+        return self.categories.filter(published=True)
+
+    def get_menu_categories(self):
+        return self.categories.filter(published=True, show_in_menu=True)
 
 
 class BlogPost(Article):
