@@ -3,7 +3,8 @@
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from opps.core.admin import apply_opps_rules, PublishableAdmin
+from opps.core.admin import (apply_opps_rules, PublishableAdmin,
+                             NotUserPublishableAdmin)
 from opps.contrib.multisite.admin import AdminViewPermission
 from opps.containers.admin import ContainerSourceInline, ContainerImageInline
 from opps.containers.admin import ContainerAdmin
@@ -112,11 +113,12 @@ class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
 
 
 @apply_opps_rules('blogs')
-class BlogAdmin(admin.ModelAdmin):
+class BlogAdmin(NotUserPublishableAdmin):
     prepopulated_fields = {"slug": ["name"]}
     filter_horizontal = ('user',)
     raw_id_fields = ['main_image', ]
     list_display = ['name', 'site', 'published']
+    list_filter = ['date_available', 'published']
 
     fieldsets = (
         (_(u'Identification'), {
