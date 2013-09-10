@@ -6,7 +6,7 @@ from django.utils.translation import ugettext_lazy as _
 from opps.core.admin import (apply_opps_rules, PublishableAdmin,
                              NotUserPublishableAdmin)
 from opps.contrib.multisite.admin import AdminViewPermission
-from opps.containers.admin import ContainerSourceInline, ContainerImageInline
+from opps.containers.admin import ContainerImageInline
 from opps.containers.admin import ContainerAdmin
 from opps.channels.models import Channel
 
@@ -78,8 +78,7 @@ class BlogPostVideoInline(admin.StackedInline):
 @apply_opps_rules('blogs')
 class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
     form = BlogPostAdminForm
-    inlines = [ContainerImageInline, ContainerSourceInline,
-               BlogPostAudioInline, BlogPostVideoInline]
+    inlines = [ContainerImageInline, BlogPostAudioInline, BlogPostVideoInline]
     list_display = ['title', 'published', 'get_http_absolute_url']
     raw_id_fields = ['main_image', 'channel', 'albums', 'category']
 
@@ -89,7 +88,7 @@ class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
                        'get_http_absolute_url', 'short_url')}),
         (_(u'Content'), {
             'fields': ('hat', 'short_title', 'headline', 'content',
-                       ('main_image', 'image_thumb'), 'tags')}),
+                       ('main_image', 'image_thumb'), 'source', 'tags')}),
         (_(u'Relationships'), {
             'fields': ('albums', 'category')}),
         (_(u'Publication'), {
