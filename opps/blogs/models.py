@@ -27,7 +27,7 @@ class Category(MPTTModel, NotUserPublishable, Slugged):
     group = models.BooleanField(_(u"Group sub-channel?"), default=False)
     order = models.IntegerField(_(u"Order"), default=0)
     parent = TreeForeignKey('self', related_name='subchannel',
-                            null=True, blank=True)
+                            null=True, blank=True, verbose_name=_(u'Parent'))
 
     class Meta:
         unique_together = ("site", "long_slug", "slug", "parent")
