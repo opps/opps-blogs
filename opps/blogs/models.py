@@ -117,9 +117,10 @@ class Blog(NotUserPublishable, Slugged):
 
 
 class BlogPost(Article):
-    blog = models.ForeignKey('blogs.Blog')
+    blog = models.ForeignKey('blogs.Blog', verbose_name=_(u'Blog'))
     content = models.TextField(_(u"Content"))
-    category = models.ForeignKey('blogs.Category', blank=True, null=True)
+    category = models.ForeignKey('blogs.Category', blank=True, null=True,
+                                 verbose_name=_(u'Category'))
     albums = models.ManyToManyField(
         'articles.Album',
         null=True, blank=True,

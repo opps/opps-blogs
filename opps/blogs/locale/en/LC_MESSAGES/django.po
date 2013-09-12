@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 00:57-0300\n"
+"POT-Creation-Date: 2013-09-12 00:59-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -38,7 +38,7 @@ msgstr ""
 msgid "%s channel is not created"
 msgstr ""
 
-#: models.py:23 models.py:77 models.py:151
+#: models.py:23 models.py:77 models.py:152
 msgid "Name"
 msgstr ""
 
@@ -62,7 +62,7 @@ msgstr ""
 msgid "Parent"
 msgstr ""
 
-#: models.py:34
+#: models.py:34 models.py:123
 msgid "Category"
 msgstr ""
 
@@ -94,54 +94,54 @@ msgstr ""
 msgid "OPPS_BLOGS_PROFILE must be of the form \"app_label.model_name\""
 msgstr ""
 
-#: models.py:127
-msgid "Albums"
-msgstr ""
-
-#: models.py:135
-msgid "Blog post"
-msgstr ""
-
-#: models.py:136
-msgid "Blog Posts"
-msgstr ""
-
-#: models.py:152
-msgid "Link"
-msgstr ""
-
-#: models.py:157
-msgid "Blog Link"
-msgstr ""
-
-#: models.py:158
-msgid "Blog Links"
-msgstr ""
-
-#: models.py:163 models.py:176
+#: models.py:120 models.py:164 models.py:177
 msgid "Blog"
 msgstr ""
 
-#: models.py:166
+#: models.py:128
+msgid "Albums"
+msgstr ""
+
+#: models.py:136
+msgid "Blog post"
+msgstr ""
+
+#: models.py:137
+msgid "Blog Posts"
+msgstr ""
+
+#: models.py:153
+msgid "Link"
+msgstr ""
+
+#: models.py:158
+msgid "Blog Link"
+msgstr ""
+
+#: models.py:159
+msgid "Blog Links"
+msgstr ""
+
+#: models.py:167
 msgid "Video"
 msgstr ""
 
-#: models.py:170
+#: models.py:171
 msgid "Blogpost Video"
 msgstr ""
 
-#: models.py:171
+#: models.py:172
 msgid "Blogpost Videos"
 msgstr ""
 
-#: models.py:178
+#: models.py:179
 msgid "Audio"
 msgstr ""
 
-#: models.py:182
+#: models.py:183
 msgid "Blogpost Audio"
 msgstr ""
 
-#: models.py:183
+#: models.py:184
 msgid "Blogpost Audios"
 msgstr ""
