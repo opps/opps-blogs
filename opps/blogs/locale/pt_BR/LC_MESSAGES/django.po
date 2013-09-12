@@ -1,144 +1,144 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
-#, fuzzy
+# 
+# Translators:
+# Ellison Leão, 2013
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: opps-blogs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-09-11 23:48-0300\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2013-09-12 02:55+0000\n"
+"Last-Translator: Ellison Leão\n"
+"Language-Team: Portuguese (Brazil) <opps-developers@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: admin.py:86 admin.py:123 admin.py:142 admin.py:186
 msgid "Identification"
-msgstr ""
+msgstr "Identificação"
 
 #: admin.py:89 models.py:120
 msgid "Content"
-msgstr ""
+msgstr "Conteúdo"
 
 #: admin.py:92
 msgid "Relationships"
-msgstr ""
+msgstr "Relacionamentos"
 
 #: admin.py:94 admin.py:126 admin.py:146 admin.py:188
 msgid "Publication"
-msgstr ""
+msgstr "Publicação"
 
 #: admin.py:107
 #, python-format
 msgid "%s channel is not created"
-msgstr ""
+msgstr "O canal %s não foi criado"
 
 #: models.py:23 models.py:76 models.py:150
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: models.py:24
 msgid "Path name"
-msgstr ""
+msgstr "Nome do caminho"
 
 #: models.py:26
 msgid "Show in menu?"
-msgstr ""
+msgstr "Mostrar no menu?"
 
 #: models.py:27
 msgid "Group sub-channel?"
-msgstr ""
+msgstr "Agrupar sub-canais?"
 
 #: models.py:28
 msgid "Order"
-msgstr ""
+msgstr "Ordem"
 
 #: models.py:30
 msgid "Parent"
-msgstr ""
+msgstr "Categoria Pai"
 
 #: models.py:34
 msgid "Category"
-msgstr ""
+msgstr "Categoria"
 
 #: models.py:35
 msgid "Categories"
-msgstr ""
+msgstr "Categorias"
 
 #: models.py:77
 msgid "Main Image"
-msgstr ""
+msgstr "Imagem principal"
 
 #: models.py:79
 msgid "Description"
-msgstr ""
+msgstr "Descrição"
 
 #: models.py:80
 msgid "Blog Type"
-msgstr ""
+msgstr "Tipo de Blog"
 
 #: models.py:91
 msgid "OPPS_BLOG_PROFILE was not found on settings"
-msgstr ""
+msgstr "Variável OPPS_BLOG_PROFILE não está setada no settings"
 
 #: models.py:96
 msgid "OPPS_BLOGS_PROFILE must be of the form \"app_label.model_name\""
-msgstr ""
+msgstr "OPPS_BLOGS_PROFILE é da forma \"app_label.model_name\""
 
 #: models.py:126
 msgid "Albums"
-msgstr ""
+msgstr "Álbuns"
 
 #: models.py:134
 msgid "Blog post"
-msgstr ""
+msgstr "Post do Blog"
 
 #: models.py:135
 msgid "Blog Posts"
-msgstr ""
+msgstr "Posts do Blog"
 
 #: models.py:151
 msgid "Link"
-msgstr ""
+msgstr "Link"
 
 #: models.py:156
 msgid "Blog Link"
-msgstr ""
+msgstr "Link de Blog"
 
 #: models.py:157
 msgid "Blog Links"
-msgstr ""
+msgstr "Links de Blog"
 
 #: models.py:162 models.py:175
 msgid "Blog"
-msgstr ""
+msgstr "Blog"
 
 #: models.py:165
 msgid "Video"
-msgstr ""
+msgstr "Vídeo"
 
 #: models.py:169
 msgid "Blogpost Video"
-msgstr ""
+msgstr "Vídeo de Post do Blog"
 
 #: models.py:170
 msgid "Blogpost Videos"
-msgstr ""
+msgstr "Vídeos de Post do Blog"
 
 #: models.py:177
 msgid "Audio"
-msgstr ""
+msgstr "Áudio"
 
 #: models.py:181
 msgid "Blogpost Audio"
-msgstr ""
+msgstr "Áudio de Post do Blog"
 
 #: models.py:182
 msgid "Blogpost Audios"
-msgstr ""
+msgstr "Áudios de Post do Blog"
