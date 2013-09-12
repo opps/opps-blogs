@@ -31,7 +31,6 @@ if not settings.configured:
             'opps.core',
             'opps.channels',
             'opps.boxes',
-            'opps.sources',
             'opps.articles',
             'opps.images',
             'opps.sitemaps',
