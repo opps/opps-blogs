@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-11 23:48-0300\n"
+"POT-Creation-Date: 2013-09-12 00:57-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 msgid "Identification"
 msgstr ""
 
-#: admin.py:89 models.py:120
+#: admin.py:89 models.py:121
 msgid "Content"
 msgstr ""
 
@@ -38,7 +38,7 @@ msgstr ""
 msgid "%s channel is not created"
 msgstr ""
 
-#: models.py:23 models.py:76 models.py:150
+#: models.py:23 models.py:77 models.py:151
 msgid "Name"
 msgstr ""
 
@@ -70,74 +70,78 @@ msgstr ""
 msgid "Categories"
 msgstr ""
 
-#: models.py:77
+#: models.py:76
+msgid "Users"
+msgstr ""
+
+#: models.py:78
 msgid "Main Image"
 msgstr ""
 
-#: models.py:79
+#: models.py:80
 msgid "Description"
 msgstr ""
 
-#: models.py:80
+#: models.py:81
 msgid "Blog Type"
 msgstr ""
 
-#: models.py:91
+#: models.py:92
 msgid "OPPS_BLOG_PROFILE was not found on settings"
 msgstr ""
 
-#: models.py:96
+#: models.py:97
 msgid "OPPS_BLOGS_PROFILE must be of the form \"app_label.model_name\""
 msgstr ""
 
-#: models.py:126
+#: models.py:127
 msgid "Albums"
 msgstr ""
 
-#: models.py:134
+#: models.py:135
 msgid "Blog post"
 msgstr ""
 
-#: models.py:135
+#: models.py:136
 msgid "Blog Posts"
 msgstr ""
 
-#: models.py:151
+#: models.py:152
 msgid "Link"
 msgstr ""
 
-#: models.py:156
+#: models.py:157
 msgid "Blog Link"
 msgstr ""
 
-#: models.py:157
+#: models.py:158
 msgid "Blog Links"
 msgstr ""
 
-#: models.py:162 models.py:175
+#: models.py:163 models.py:176
 msgid "Blog"
 msgstr ""
 
-#: models.py:165
+#: models.py:166
 msgid "Video"
 msgstr ""
 
-#: models.py:169
+#: models.py:170
 msgid "Blogpost Video"
 msgstr ""
 
-#: models.py:170
+#: models.py:171
 msgid "Blogpost Videos"
 msgstr ""
 
-#: models.py:177
+#: models.py:178
 msgid "Audio"
 msgstr ""
 
-#: models.py:181
+#: models.py:182
 msgid "Blogpost Audio"
 msgstr ""
 
-#: models.py:182
+#: models.py:183
 msgid "Blogpost Audios"
 msgstr ""

@@ -1,28 +1,28 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # Translators:
 # Ellison Leão, 2013
 msgid ""
 msgstr ""
 "Project-Id-Version: opps-blogs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-11 23:48-0300\n"
+"POT-Creation-Date: 2013-09-12 00:57-0300\n"
 "PO-Revision-Date: 2013-09-12 02:55+0000\n"
 "Last-Translator: Ellison Leão\n"
 "Language-Team: Portuguese (Brazil) <opps-developers@googlegroups.com>\n"
+"Language: pt_BR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #: admin.py:86 admin.py:123 admin.py:142 admin.py:186
 msgid "Identification"
 msgstr "Identificação"
 
-#: admin.py:89 models.py:120
+#: admin.py:89 models.py:121
 msgid "Content"
 msgstr "Conteúdo"
 
@@ -39,7 +39,7 @@ msgstr "Publicação"
 msgid "%s channel is not created"
 msgstr "O canal %s não foi criado"
 
-#: models.py:23 models.py:76 models.py:150
+#: models.py:23 models.py:77 models.py:151
 msgid "Name"
 msgstr "Nome"
 
@@ -71,74 +71,78 @@ msgstr "Categoria"
 msgid "Categories"
 msgstr "Categorias"
 
-#: models.py:77
+#: models.py:76
+msgid "Users"
+msgstr "Usuários"
+
+#: models.py:78
 msgid "Main Image"
 msgstr "Imagem principal"
 
-#: models.py:79
+#: models.py:80
 msgid "Description"
 msgstr "Descrição"
 
-#: models.py:80
+#: models.py:81
 msgid "Blog Type"
 msgstr "Tipo de Blog"
 
-#: models.py:91
+#: models.py:92
 msgid "OPPS_BLOG_PROFILE was not found on settings"
 msgstr "Variável OPPS_BLOG_PROFILE não está setada no settings"
 
-#: models.py:96
+#: models.py:97
 msgid "OPPS_BLOGS_PROFILE must be of the form \"app_label.model_name\""
 msgstr "OPPS_BLOGS_PROFILE é da forma \"app_label.model_name\""
 
-#: models.py:126
+#: models.py:127
 msgid "Albums"
 msgstr "Álbuns"
 
-#: models.py:134
+#: models.py:135
 msgid "Blog post"
 msgstr "Post do Blog"
 
-#: models.py:135
+#: models.py:136
 msgid "Blog Posts"
 msgstr "Posts do Blog"
 
-#: models.py:151
+#: models.py:152
 msgid "Link"
 msgstr "Link"
 
-#: models.py:156
+#: models.py:157
 msgid "Blog Link"
 msgstr "Link de Blog"
 
-#: models.py:157
+#: models.py:158
 msgid "Blog Links"
 msgstr "Links de Blog"
 
-#: models.py:162 models.py:175
+#: models.py:163 models.py:176
 msgid "Blog"
 msgstr "Blog"
 
-#: models.py:165
+#: models.py:166
 msgid "Video"
 msgstr "Vídeo"
 
-#: models.py:169
+#: models.py:170
 msgid "Blogpost Video"
 msgstr "Vídeo de Post do Blog"
 
-#: models.py:170
+#: models.py:171
 msgid "Blogpost Videos"
 msgstr "Vídeos de Post do Blog"
 
-#: models.py:177
+#: models.py:178
 msgid "Audio"
 msgstr "Áudio"
 
-#: models.py:181
+#: models.py:182
 msgid "Blogpost Audio"
 msgstr "Áudio de Post do Blog"
 
-#: models.py:182
+#: models.py:183
 msgid "Blogpost Audios"
 msgstr "Áudios de Post do Blog"

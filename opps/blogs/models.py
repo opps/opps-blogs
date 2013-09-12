@@ -72,7 +72,8 @@ class Category(MPTTModel, NotUserPublishable, Slugged):
 
 
 class Blog(NotUserPublishable, Slugged):
-    user = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    user = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                  verbose_name=_(u'Users'))
     name = models.CharField(_(u"Name"), max_length=140)
     main_image = models.ForeignKey(Image, verbose_name=_(u'Main Image'),
                                    blank=True, null=True)
