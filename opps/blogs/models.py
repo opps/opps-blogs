@@ -115,6 +115,11 @@ class Blog(NotUserPublishable, Slugged):
     def get_menu_categories(self):
         return self.categories.filter(published=True, show_in_menu=True)
 
+    class Meta:
+        verbose_name = _(u'Blog')
+        verbose_name_plural = _(u'Blogs')
+        ordering = ('name', )
+
 
 class BlogPost(Article):
     blog = models.ForeignKey('blogs.Blog', verbose_name=_(u'Blog'))
