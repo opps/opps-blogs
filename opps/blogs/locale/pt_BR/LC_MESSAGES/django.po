@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opps-blogs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 00:59-0300\n"
+"POT-Creation-Date: 2013-11-19 16:13-0200\n"
 "PO-Revision-Date: 2013-09-12 02:55+0000\n"
 "Last-Translator: Ellison Leão\n"
 "Language-Team: Portuguese (Brazil) <opps-developers@googlegroups.com>\n"
@@ -22,7 +22,7 @@ msgstr ""
 msgid "Identification"
 msgstr "Identificação"
 
-#: admin.py:89 models.py:121
+#: admin.py:89 models.py:126
 msgid "Content"
 msgstr "Conteúdo"
 
@@ -39,7 +39,7 @@ msgstr "Publicação"
 msgid "%s channel is not created"
 msgstr "O canal %s não foi criado"
 
-#: models.py:23 models.py:77 models.py:152
+#: models.py:23 models.py:77 models.py:157
 msgid "Name"
 msgstr "Nome"
 
@@ -63,7 +63,7 @@ msgstr "Ordem"
 msgid "Parent"
 msgstr "Categoria Pai"
 
-#: models.py:34 models.py:123
+#: models.py:34 models.py:128
 msgid "Category"
 msgstr "Categoria"
 
@@ -95,54 +95,58 @@ msgstr "Variável OPPS_BLOG_PROFILE não está setada no settings"
 msgid "OPPS_BLOGS_PROFILE must be of the form \"app_label.model_name\""
 msgstr "OPPS_BLOGS_PROFILE é da forma \"app_label.model_name\""
 
-#: models.py:120 models.py:164 models.py:177
+#: models.py:119 models.py:125 models.py:169 models.py:182
 msgid "Blog"
 msgstr "Blog"
 
-#: models.py:128
+#: models.py:120
+msgid "Blogs"
+msgstr "Blogs"
+
+#: models.py:133
 msgid "Albums"
 msgstr "Álbuns"
 
-#: models.py:136
+#: models.py:141
 msgid "Blog post"
 msgstr "Post do Blog"
 
-#: models.py:137
+#: models.py:142
 msgid "Blog Posts"
 msgstr "Posts do Blog"
 
-#: models.py:153
+#: models.py:158
 msgid "Link"
 msgstr "Link"
 
-#: models.py:158
+#: models.py:163
 msgid "Blog Link"
 msgstr "Link de Blog"
 
-#: models.py:159
+#: models.py:164
 msgid "Blog Links"
 msgstr "Links de Blog"
 
-#: models.py:167
+#: models.py:172
 msgid "Video"
 msgstr "Vídeo"
 
-#: models.py:171
+#: models.py:176
 msgid "Blogpost Video"
 msgstr "Vídeo de Post do Blog"
 
-#: models.py:172
+#: models.py:177
 msgid "Blogpost Videos"
 msgstr "Vídeos de Post do Blog"
 
-#: models.py:179
+#: models.py:184
 msgid "Audio"
 msgstr "Áudio"
 
-#: models.py:183
+#: models.py:188
 msgid "Blogpost Audio"
 msgstr "Áudio de Post do Blog"
 
-#: models.py:184
+#: models.py:189
 msgid "Blogpost Audios"
 msgstr "Áudios de Post do Blog"
