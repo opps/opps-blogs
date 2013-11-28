@@ -18,10 +18,6 @@ class BaseListView(ListView):
         self.channel = get_object_or_404(Channel,
                                          slug=settings.OPPS_BLOGS_CHANNEL,
                                          site=self.site)
-        self.channel_descendants = [i for i in self.channel.get_descendants(
-            include_self=False
-        )]
-
         return super(BaseListView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
