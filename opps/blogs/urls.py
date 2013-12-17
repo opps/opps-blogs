@@ -10,12 +10,12 @@ from .conf import settings
 
 urlpatterns = patterns(
     '',
-    url(r'^{}/(?P<blog__slug>[\w\b-]+)/authors?/$'.format(
+    url(r'^{}/(?P<blog__slug>[\w\b-]+)/authors/?$'.format(
         settings.OPPS_BLOGS_CHANNEL),
         cache_page(settings.OPPS_CACHE_EXPIRE)(BlogUsersList.as_view()),
         name='blogusers-list',
         kwargs={'channel__long_slug': settings.OPPS_BLOGS_CHANNEL}),
-    url(r'^{}/(?P<blog__slug>[\w\b-]+)/(?P<category_long_slug>[\w\b//-]+)/(?P<slug>[\w-]+)?/$'.format(
+    url(r'^{}/(?P<blog__slug>[\w\b-]+)/(?P<category_long_slug>[\w\b//-]+)/(?P<slug>[\w-]+)\.html$'.format(
         settings.OPPS_BLOGS_CHANNEL),
         cache_page(settings.OPPS_CACHE_EXPIRE)(BlogPostDetail.as_view()),
         name='blogpost-detail',

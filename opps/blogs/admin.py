@@ -110,6 +110,11 @@ class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
 
         super(BlogPostAdmin, self).save_model(request, obj, form, change)
 
+    def has_change_permission(self, request, obj=True):
+        if request.user.is_superuser:
+            return True
+        return super(BlogPostAdmin, self).has_change_permission(request, obj)
+
 
 @apply_opps_rules('blogs')
 class BlogAdmin(NotUserPublishableAdmin):
@@ -128,7 +133,13 @@ class BlogAdmin(NotUserPublishableAdmin):
             'fields': ('published', 'date_available')}),
     )
 
+    def has_change_permission(self, request, obj=True):
+        if request.user.is_superuser:
+            return True
+        return super(BlogAdmin, self).has_change_permission(request, obj)
 
+
+@apply_opps_rules('blogs')
 class CategoryAdmin(PublishableAdmin):
     prepopulated_fields = {"slug": ("name",)}
     list_display = ['name', 'parent', 'site', 'date_available',
@@ -150,7 +161,7 @@ class CategoryAdmin(PublishableAdmin):
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(CategoryAdmin, self).get_form(request, obj,
-                                                         **kwargs)
+                                                   **kwargs)
         if request.user.is_superuser:
             return form
         try:
@@ -166,7 +177,7 @@ class CategoryAdmin(PublishableAdmin):
             return True
 
         blogpermission = Blog.objects.filter(user=request.user)
-        if len(blogpermission) == 0:
+        if not blogpermission.exists():
             return False
         return True
 
@@ -176,6 +187,11 @@ class CategoryAdmin(PublishableAdmin):
             return qs
 
         return qs.filter(blog__user=request.user)
+
+    def has_change_permission(self, request, obj=True):
+        if request.user.is_superuser:
+            return True
+        return super(CategoryAdmin, self).has_change_permission(request, obj)
 
 
 @apply_opps_rules('blogs')
@@ -190,6 +206,10 @@ class BlogLinkAdmin(AdminBlogPermission):
             'fields': ('published',)}),
     )
 
+    def has_change_permission(self, request, obj=None):
+        if request.user.is_superuser:
+            return True
+        return super(BlogLinkAdmin, self).has_change_permission(request, obj)
 
 admin.site.register(BlogPost, BlogPostAdmin)
 admin.site.register(Blog, BlogAdmin)

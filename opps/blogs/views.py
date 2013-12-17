@@ -3,6 +3,7 @@
 from django.contrib.sites.models import get_current_site
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 
 from opps.channels.models import Channel
 from opps.views.generic.list import ListView
@@ -10,6 +11,8 @@ from opps.views.generic.detail import DetailView
 
 from opps.blogs.models import BlogPost, Blog
 from .conf import settings
+
+User = get_user_model()
 
 
 class BaseListView(ListView):
@@ -74,7 +77,12 @@ class BlogUsersList(BaseListView):
             published=True)
         if not self.blogs:
             return []
-        return [i.user for i in self.blogs]
+        users_ids = []
+        for blog in self.blogs:
+            ids = [i.id for i in blog.user.all()]
+            users_ids.extend(ids)
+        ids = list(set(users_ids))
+        return User.objects.filter(pk__in=ids)
 
 
 class BlogPostList(BaseListView):
