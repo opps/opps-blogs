@@ -88,7 +88,8 @@ class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
                        'get_http_absolute_url', 'short_url')}),
         (_(u'Content'), {
             'fields': ('hat', 'short_title', 'headline', 'content',
-                       ('main_image', 'image_thumb'), 'source', 'tags')}),
+                       ('main_image', 'image_thumb'), 'source', 'tags',
+                       'accept_comments')}),
         (_(u'Relationships'), {
             'fields': ('albums', 'category')}),
         (_(u'Publication'), {
@@ -127,7 +128,7 @@ class BlogAdmin(NotUserPublishableAdmin):
     fieldsets = (
         (_(u'Identification'), {
             'fields': ('site', 'type', 'name', 'slug', 'description',
-                       'main_image', 'user')}),
+                       'layout_mode', 'main_image', 'user')}),
         (_(u'Publication'), {
             'classes': ('extrapretty'),
             'fields': ('published', 'date_available')}),
