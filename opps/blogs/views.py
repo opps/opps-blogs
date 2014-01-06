@@ -94,14 +94,16 @@ class BlogPostList(BaseListView):
     def get_template_names(self):
         templates = super(BlogPostList, self).get_template_names()
         domain_folder = self.get_template_folder()
-        templates = ['{}/blogs/{}/{}.html'.format(
-            domain_folder,
-            self.kwargs['blog__slug'],
-            self.paginate_suffix
-        ), '{}/blogs/{}.html'.format(
-            domain_folder,
-            self.paginate_suffix)] + templates
-
+        templates = [
+            '{}/blogs/{}/{}_{}.html'.format(domain_folder,
+                                            self.kwargs['blog__slug'],
+                                            self.paginate_suffix,
+                                            self.blog_obj.layout_mode),
+            '{}/blogs/{}/{}.html'.format(domain_folder,
+                                         self.kwargs['blog__slug'],
+                                         self.paginate_suffix),
+            '{}/blogs/{}.html'.format(domain_folder, self.paginate_suffix)
+        ] + templates
         return templates
 
     def get_queryset(self):
