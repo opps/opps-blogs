@@ -102,7 +102,9 @@ class BlogPostList(BaseListView):
             '{}/blogs/{}/{}.html'.format(domain_folder,
                                          self.kwargs['blog__slug'],
                                          self.paginate_suffix),
-            '{}/blogs/{}.html'.format(domain_folder, self.paginate_suffix)
+            '{}/blogs/{}_{}.html'.format(domain_folder,
+                                         self.paginate_suffix,
+                                         self.blog_obj.layout_mode),
         ] + templates
         return templates
 
