@@ -72,6 +72,11 @@ class Category(MPTTModel, NotUserPublishable, Slugged):
 
 
 class Blog(NotUserPublishable, Slugged):
+    LAYOUT_MODES = (
+        ('default', _(u'Default')),
+        ('resumed', _(u'Resumed')),
+    )
+
     user = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                   verbose_name=_(u'Users'))
     name = models.CharField(_(u"Name"), max_length=140)
@@ -80,12 +85,13 @@ class Blog(NotUserPublishable, Slugged):
     description = models.TextField(_(u'Description'), blank=True)
     type = models.CharField(_(u'Blog Type'), max_length=200,
                             choices=settings.OPPS_BLOGS_TYPES)
+    layout_mode = models.CharField(_(u'Layout mode'), max_length=200,
+                                   default='default', choices=LAYOUT_MODES)
 
     __unicode__ = lambda self: self.name
 
     def get_absolute_url(self):
-        return u"/{}/{}/".format(settings.OPPS_BLOGS_CHANNEL,
-                                    self.slug)
+        return u"/{}/{}/".format(settings.OPPS_BLOGS_CHANNEL, self.slug)
 
     def get_profile(self):
         if not settings.OPPS_BLOGS_PROFILE:
@@ -136,6 +142,9 @@ class BlogPost(Article):
                                     through='BlogPostVideo')
     audios = models.ManyToManyField(Audio, blank=True, null=True,
                                     through='BlogPostAudio')
+
+    accept_comments = models.BooleanField(_(u'Accept comments?'),
+                                          default=True)
 
     class Meta:
         verbose_name = _(u'Blog post')
