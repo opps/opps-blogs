@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opps-blogs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-11-19 16:13-0200\n"
+"POT-Creation-Date: 2014-01-06 16:39-0200\n"
 "PO-Revision-Date: 2013-09-12 02:55+0000\n"
 "Last-Translator: Ellison Leão\n"
 "Language-Team: Portuguese (Brazil) <opps-developers@googlegroups.com>\n"
@@ -18,28 +18,28 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: admin.py:86 admin.py:123 admin.py:142 admin.py:186
+#: admin.py:86 admin.py:129 admin.py:154 admin.py:203
 msgid "Identification"
 msgstr "Identificação"
 
-#: admin.py:89 models.py:126
+#: admin.py:89 models.py:132
 msgid "Content"
 msgstr "Conteúdo"
 
-#: admin.py:92
+#: admin.py:93
 msgid "Relationships"
 msgstr "Relacionamentos"
 
-#: admin.py:94 admin.py:126 admin.py:146 admin.py:188
+#: admin.py:95 admin.py:132 admin.py:158 admin.py:205
 msgid "Publication"
 msgstr "Publicação"
 
-#: admin.py:107
+#: admin.py:108
 #, python-format
 msgid "%s channel is not created"
 msgstr "O canal %s não foi criado"
 
-#: models.py:23 models.py:77 models.py:157
+#: models.py:23 models.py:82 models.py:166
 msgid "Name"
 msgstr "Nome"
 
@@ -63,7 +63,7 @@ msgstr "Ordem"
 msgid "Parent"
 msgstr "Categoria Pai"
 
-#: models.py:34 models.py:128
+#: models.py:34 models.py:134
 msgid "Category"
 msgstr "Categoria"
 
@@ -72,81 +72,97 @@ msgid "Categories"
 msgstr "Categorias"
 
 #: models.py:76
+msgid "Default"
+msgstr "Padrão"
+
+#: models.py:77
+msgid "Resumed"
+msgstr "Resumido"
+
+#: models.py:81
 msgid "Users"
 msgstr "Usuários"
 
-#: models.py:78
+#: models.py:83
 msgid "Main Image"
 msgstr "Imagem principal"
 
-#: models.py:80
+#: models.py:85
 msgid "Description"
 msgstr "Descrição"
 
-#: models.py:81
+#: models.py:86
 msgid "Blog Type"
 msgstr "Tipo de Blog"
 
-#: models.py:92
+#: models.py:88
+msgid "Layout mode"
+msgstr "Tipo de Layout"
+
+#: models.py:98
 msgid "OPPS_BLOG_PROFILE was not found on settings"
 msgstr "Variável OPPS_BLOG_PROFILE não está setada no settings"
 
-#: models.py:97
+#: models.py:103
 msgid "OPPS_BLOGS_PROFILE must be of the form \"app_label.model_name\""
 msgstr "OPPS_BLOGS_PROFILE é da forma \"app_label.model_name\""
 
-#: models.py:119 models.py:125 models.py:169 models.py:182
+#: models.py:125 models.py:131 models.py:178 models.py:191
 msgid "Blog"
 msgstr "Blog"
 
-#: models.py:120
+#: models.py:126
 msgid "Blogs"
 msgstr "Blogs"
 
-#: models.py:133
+#: models.py:139
 msgid "Albums"
 msgstr "Álbuns"
 
-#: models.py:141
+#: models.py:146
+msgid "Accept comments?"
+msgstr "Aceitar comentários?"
+
+#: models.py:150
 msgid "Blog post"
 msgstr "Post do Blog"
 
-#: models.py:142
+#: models.py:151
 msgid "Blog Posts"
 msgstr "Posts do Blog"
 
-#: models.py:158
+#: models.py:167
 msgid "Link"
 msgstr "Link"
 
-#: models.py:163
+#: models.py:172
 msgid "Blog Link"
 msgstr "Link de Blog"
 
-#: models.py:164
+#: models.py:173
 msgid "Blog Links"
 msgstr "Links de Blog"
 
-#: models.py:172
+#: models.py:181
 msgid "Video"
 msgstr "Vídeo"
 
-#: models.py:176
+#: models.py:185
 msgid "Blogpost Video"
 msgstr "Vídeo de Post do Blog"
 
-#: models.py:177
+#: models.py:186
 msgid "Blogpost Videos"
 msgstr "Vídeos de Post do Blog"
 
-#: models.py:184
+#: models.py:193
 msgid "Audio"
 msgstr "Áudio"
 
-#: models.py:188
+#: models.py:197
 msgid "Blogpost Audio"
 msgstr "Áudio de Post do Blog"
 
-#: models.py:189
+#: models.py:198
 msgid "Blogpost Audios"
 msgstr "Áudios de Post do Blog"
