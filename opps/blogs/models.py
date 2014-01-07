@@ -31,13 +31,12 @@ class Category(MPTTModel, NotUserPublishable):
                             null=True, blank=True, verbose_name=_(u'Parent'))
 
     class Meta:
-        unique_together = ("site", "long_slug", "slug", "parent")
+        unique_together = ("site", "blog", "long_slug")
         verbose_name = _('Category')
         verbose_name_plural = _('Categories')
         ordering = ['name', 'parent__id', 'published']
 
     class MPTTMeta:
-        unique_together = ("site", "blog", "long_slug")
         order_insertion_by = ['order', 'name']
 
     def __unicode__(self):
