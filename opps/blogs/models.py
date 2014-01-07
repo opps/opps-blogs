@@ -18,9 +18,10 @@ from opps.multimedias.models import Audio, Video
 from .conf import settings
 
 
-class Category(MPTTModel, NotUserPublishable, Slugged):
+class Category(MPTTModel, NotUserPublishable):
     blog = models.ForeignKey('blogs.Blog', related_name='categories')
     name = models.CharField(_(u"Name"), max_length=140)
+    slug = models.SlugField(_(u"Slug"), db_index=True, max_length=150)
     long_slug = models.SlugField(_(u"Path name"), max_length=250,
                                  db_index=True)
     show_in_menu = models.BooleanField(_(u"Show in menu?"), default=False)
@@ -36,7 +37,7 @@ class Category(MPTTModel, NotUserPublishable, Slugged):
         ordering = ['name', 'parent__id', 'published']
 
     class MPTTMeta:
-        unique_together = ("site", "long_slug", "slug", "parent")
+        unique_together = ("site", "blog", "long_slug")
         order_insertion_by = ['order', 'name']
 
     def __unicode__(self):
