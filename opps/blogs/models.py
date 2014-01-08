@@ -18,10 +18,9 @@ from opps.multimedias.models import Audio, Video
 from .conf import settings
 
 
-class Category(MPTTModel, NotUserPublishable):
+class Category(MPTTModel, NotUserPublishable, Slugged):
     blog = models.ForeignKey('blogs.Blog', related_name='categories')
     name = models.CharField(_(u"Name"), max_length=140)
-    slug = models.SlugField(_(u"Slug"), db_index=True, max_length=150)
     long_slug = models.SlugField(_(u"Path name"), max_length=250,
                                  db_index=True)
     show_in_menu = models.BooleanField(_(u"Show in menu?"), default=False)
@@ -50,6 +49,11 @@ class Category(MPTTModel, NotUserPublishable):
     def get_absolute_url(self):
         return u"/{}/{}{}".format(settings.OPPS_BLOGS_CHANNEL,
                                   self.blog.slug, self.__unicode__())
+
+    def validate_slug(self):
+        # Prevent Slugged.validate_slug by append a suffix to slugs
+        # that are not unique
+        pass
 
     @property
     def root(self):
