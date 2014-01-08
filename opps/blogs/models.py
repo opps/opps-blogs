@@ -26,8 +26,15 @@ class Category(MPTTModel, NotUserPublishable, Slugged):
     show_in_menu = models.BooleanField(_(u"Show in menu?"), default=False)
     group = models.BooleanField(_(u"Group sub-channel?"), default=False)
     order = models.IntegerField(_(u"Order"), default=0)
-    parent = TreeForeignKey('self', related_name='subchannel',
-                            null=True, blank=True, verbose_name=_(u'Parent'))
+    parent = TreeForeignKey(
+        'self',
+        related_name='subchannel',
+        null=True, blank=True,
+        verbose_name=_(u'Parent'),
+        limit_choices_to={
+            'parent__isnull': True, # We don't allow subsubcategories
+        }
+    )
 
     class Meta:
         unique_together = ("site", "blog", "long_slug")
