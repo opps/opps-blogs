@@ -61,11 +61,12 @@ class Category(MPTTModel, NotUserPublishable, Slugged):
 
     def clean(self):
         category_exists = Category.objects.filter(
-            slug=self.slug, site=self.site, blog=self.blog)
-
+            site=self.site,
+            blog=self.blog,
+            slug=self.long_slug,
+        )
         if category_exists.exists() and not self.pk:
             raise ValidationError('Slug exist in domain!')
-
         super(Category, self).clean()
 
     def save(self, *args, **kwargs):
