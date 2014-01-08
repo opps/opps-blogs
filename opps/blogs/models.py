@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.db.models import get_model
 from django.utils.translation import ugettext_lazy as _
 from django.core.exceptions import ImproperlyConfigured
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError, ObjectDoesNotExist
 
 from mptt.models import MPTTModel, TreeForeignKey
 
@@ -50,30 +50,45 @@ class Category(MPTTModel, NotUserPublishable, Slugged):
         return u"/{}/{}{}".format(settings.OPPS_BLOGS_CHANNEL,
                                   self.blog.slug, self.__unicode__())
 
-    def validate_slug(self):
-        # Prevent Slugged.validate_slug by append a suffix to slugs
-        # that are not unique
-        pass
-
     @property
     def root(self):
         return self.get_root()
 
+    def _make_long_slug(self):
+        if self.parent:
+            return u'{}/{}'.format(self.parent.slug, self.slug)
+        return self.slug
+
     def clean(self):
-        category_exists = Category.objects.filter(
-            site=self.site,
-            blog=self.blog,
-            slug=self.long_slug,
-        )
-        if category_exists.exists() and not self.pk:
-            raise ValidationError('Slug exist in domain!')
-        super(Category, self).clean()
+        """Validate uniqueness based on unique_together
+        """
+        # Do not use self.long_slug here, it might don't exists yet,
+        # use self._make_long_slug() instead.
+        try:
+            category_list = Category.objects.filter(
+                site=self.site,
+                blog=self.blog,
+                long_slug=self._make_long_slug()
+            )
+        except ObjectDoesNotExist:
+            pass
+        else:
+            if self.pk:
+                category_list = category_list.exclude(pk=self.pk)
+            if category_list.exists():
+                raise ValidationError(_('The slug chosen already exists. Please try another.'))
+        finally:
+            super(Category, self).clean()
 
     def save(self, *args, **kwargs):
-        self.long_slug = u"{}".format(self.slug)
-        if self.parent:
-            self.long_slug = u"{}/{}".format(self.parent.slug, self.slug)
+        self.long_slug = self._make_long_slug()
         super(Category, self).save(*args, **kwargs)
+
+    def validate_slug(self):
+        # Prevent Slugged.validate_slug by append a suffix to slugs
+        # that are not unique. Our uniqueness here are based on
+        # long_slug.
+        pass
 
 
 class Blog(NotUserPublishable, Slugged):
