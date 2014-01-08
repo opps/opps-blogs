@@ -184,8 +184,8 @@ class BlogPost(Article):
         except AttributeError:
             slug = 'sem-categoria'
 
-        return u"/{}/{}/{}/{}/".format(settings.OPPS_BLOGS_CHANNEL,
-                                       self.blog.slug, slug, self.slug)
+        return u"/{}/{}/{}/{}.html".format(settings.OPPS_BLOGS_CHANNEL,
+                                           self.blog.slug, slug, self.slug)
 
 
 class BlogLink(NotUserPublishable):

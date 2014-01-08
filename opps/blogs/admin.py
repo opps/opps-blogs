@@ -79,7 +79,7 @@ class BlogPostVideoInline(admin.StackedInline):
 class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
     form = BlogPostAdminForm
     inlines = [ContainerImageInline, BlogPostAudioInline, BlogPostVideoInline]
-    list_display = ['title', 'published', 'get_http_absolute_url']
+    list_display = ['title', 'category', 'published', 'get_http_absolute_url']
     raw_id_fields = ['main_image', 'channel', 'albums', 'category']
 
     fieldsets = (

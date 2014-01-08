@@ -116,7 +116,6 @@ class BlogPostList(BaseListView):
             blog=self.blog_obj,
             date_available__lte=timezone.now(),
             published=True)
-
         return self.article
 
 
