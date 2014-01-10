@@ -30,6 +30,23 @@ class BaseListView(ListView):
                                                 slug=self.kwargs['blog__slug'])
         return context
 
+    def get_template_names(self):
+        templates = super(BaseListView, self).get_template_names()
+        domain_folder = self.get_template_folder()
+        templates = [
+            '{}/blogs/{}/{}_{}.html'.format(domain_folder,
+                                            self.kwargs['blog__slug'],
+                                            self.paginate_suffix,
+                                            self.blog_obj.layout_mode),
+            '{}/blogs/{}/{}.html'.format(domain_folder,
+                                         self.kwargs['blog__slug'],
+                                         self.paginate_suffix),
+            '{}/blogs/{}_{}.html'.format(domain_folder,
+                                         self.paginate_suffix,
+                                         self.blog_obj.layout_mode),
+        ] + templates
+        return templates
+
 
 class BlogList(BaseListView):
     model = Blog
@@ -91,23 +108,6 @@ class BlogPostList(BaseListView):
     channel_long_slug = []
     paginate_suffix = 'list'
 
-    def get_template_names(self):
-        templates = super(BlogPostList, self).get_template_names()
-        domain_folder = self.get_template_folder()
-        templates = [
-            '{}/blogs/{}/{}_{}.html'.format(domain_folder,
-                                            self.kwargs['blog__slug'],
-                                            self.paginate_suffix,
-                                            self.blog_obj.layout_mode),
-            '{}/blogs/{}/{}.html'.format(domain_folder,
-                                         self.kwargs['blog__slug'],
-                                         self.paginate_suffix),
-            '{}/blogs/{}_{}.html'.format(domain_folder,
-                                         self.paginate_suffix,
-                                         self.blog_obj.layout_mode),
-        ] + templates
-        return templates
-
     def get_queryset(self):
         self.long_slug = self.kwargs['blog__slug']
         self.blog_obj = get_object_or_404(Blog, slug=self.long_slug)
@@ -121,6 +121,7 @@ class BlogPostList(BaseListView):
 
 class CategoryList(BaseListView):
     model = BlogPost
+    paginate_suffix = 'list'
 
     def get_queryset(self):
         self.long_slug = self.kwargs['blog__slug']
