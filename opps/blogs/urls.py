@@ -30,7 +30,7 @@ urlpatterns = patterns(
         cache_page(settings.OPPS_CACHE_EXPIRE)(CategoryList.as_view()),
         name='category-list',
         kwargs={'channel__long_slug': settings.OPPS_BLOGS_CHANNEL}),
-    url(r'^{}/(?P<blog__slug>[\w\b-]+)?/$'.format(settings.OPPS_BLOGS_CHANNEL),
+    url(r'^{}/(?P<blog__slug>[\w\b-]+)/?$'.format(settings.OPPS_BLOGS_CHANNEL),
         cache_page(settings.OPPS_CACHE_EXPIRE)(BlogPostList.as_view()),
         name='blogpost-list',
         kwargs={'channel__long_slug': settings.OPPS_BLOGS_CHANNEL}),
