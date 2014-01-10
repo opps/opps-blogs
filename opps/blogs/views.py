@@ -35,13 +35,14 @@ class BaseListView(ListView):
     def get_template_names(self):
         templates = super(BaseListView, self).get_template_names()
         domain_folder = self.get_template_folder()
+        blog_slug = self.kwargs['blog__slug']
         templates = [
             '{}/blogs/{}/{}_{}.html'.format(domain_folder,
-                                            self.kwargs['blog__slug'],
+                                            blog_slug,
                                             self.paginate_suffix,
                                             self.blog_obj.layout_mode),
             '{}/blogs/{}/{}.html'.format(domain_folder,
-                                         self.kwargs['blog__slug'],
+                                         blog_slug,
                                          self.paginate_suffix),
             '{}/blogs/{}_{}.html'.format(domain_folder,
                                          self.paginate_suffix,
