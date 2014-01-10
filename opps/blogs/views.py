@@ -8,6 +8,8 @@ from django.contrib.auth import get_user_model
 from opps.channels.models import Channel
 from opps.views.generic.list import ListView
 from opps.views.generic.detail import DetailView
+from opps.core.tags.views import TagList
+from opps.core.tags.models import Tag
 
 from opps.blogs.models import BlogPost, Blog
 from .conf import settings
@@ -54,9 +56,8 @@ class BlogList(BaseListView):
     paginate_suffix = 'list'
 
     def get_template_names(self):
-        templates = super(BlogList, self).get_template_names()
         domain_folder = self.get_template_folder()
-        templates = ['{}/blogs/blogs.html'.format(domain_folder)] + templates
+        templates = ['{}/blogs/blogs.html'.format(domain_folder)]
         return templates
 
     def get_queryset(self):
@@ -159,15 +160,13 @@ class BlogPostDetail(DetailView):
         return context
 
     def get_template_names(self):
-        templates = super(BlogPostDetail, self).get_template_names()
         domain_folder = self.get_template_folder()
-        templates = ['{}/blogs/{}/{}.html'.format(
+        templates = ['{}/blogs/{}/detail.html'.format(
             domain_folder,
             self.long_slug,
-            self.paginate_suffix
-        ), '{}/blogs/{}.html'.format(
-            domain_folder,
-            self.paginate_suffix)] + templates
+        ), '{}/blogs/detail.html'.format(
+            domain_folder
+        )]
         return templates
 
     def get_queryset(self):
@@ -185,3 +184,49 @@ class BlogPostDetail(DetailView):
 
         self.article = self.model.objects.filter(**lookups)
         return self.article
+
+
+class BlogTagList(TagList):
+    model = BlogPost
+
+    def get_template_names(self):
+        domain_folder = self.get_template_folder()
+        blog_slug = self.kwargs.get('blog__slug')
+        templates = ['{}/blogs/{}/tags.html'.format(
+            domain_folder,
+            blog_slug,
+        ), '{}/blogs/tags.html'.format(
+            domain_folder,
+        )]
+        return templates
+
+    def get_queryset(self):
+        self.site = get_current_site(self.request)
+        # without the long_slug, the queryset will cause an error
+        self.long_slug = 'tags'
+        self.tag = self.kwargs['tag']
+
+        tags = Tag.objects.filter(slug=self.tag).values_list('name') or []
+        tags_names = []
+        if tags:
+            tags_names = [i[0] for i in tags]
+
+        ids = []
+        for tag in tags_names:
+            result = self.containers = self.model.objects.filter(
+                site_domain=self.site,
+                tags__contains=tag,
+                date_available__lte=timezone.now(),
+                published=True,
+                blog__slug=self.kwargs['blog__slug'],
+            )
+            if result.exists():
+                ids.extend([i.id for i in result])
+
+        # remove the repeated
+        ids = list(set(ids))
+
+        # grab the blogposts
+        self.containers = self.model.objects.filter(id__in=ids)
+
+        return self.containers
