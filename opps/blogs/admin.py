@@ -24,23 +24,22 @@ class AdminBlogPermission(AdminViewPermission):
         if request.user.is_superuser:
             return queryset
 
-        try:
-            blogpermission = Blog.objects.filter(user=request.user)
-            return queryset.filter(blog__in=blogpermission)
-        except Blog.DoesNotExist:
-            return queryset.none()
+        blogs = Blog.objects.filter(user=request.user)
+        if blogs.exists():
+            return queryset.filter(blog__in=blogs)
+        return queryset.none()
 
     def get_form(self, request, obj=None, **kwargs):
         form = super(AdminBlogPermission, self).get_form(request, obj,
                                                          **kwargs)
         if request.user.is_superuser:
             return form
-        try:
-            blogpermission = Blog.objects.filter(user=request.user)
+
+        blogs = Blog.objects.filter(user=request.user)
+        if blogs.exists():
             form.base_fields['blog'].choices = (
-                (b.id, b.name) for b in blogpermission)
-        except Blog.DoesNotExist:
-            pass
+                (b.id, b.name) for b in blogs
+            )
         return form
 
     def has_add_permission(self, request):
