@@ -17,10 +17,10 @@ from .models import (Category, Blog, BlogPost, BlogPostAudio, BlogPostVideo,
 from .conf import settings
 
 
-class AdminBlogPermission(AdminViewPermission):
+class BlogAdminPermission(AdminViewPermission):
 
     def queryset(self, request):
-        queryset = super(AdminBlogPermission, self).queryset(request)
+        queryset = super(BlogAdminPermission, self).queryset(request)
         if request.user.is_superuser:
             return queryset
 
@@ -30,7 +30,7 @@ class AdminBlogPermission(AdminViewPermission):
         return queryset.none()
 
     def get_form(self, request, obj=None, **kwargs):
-        form = super(AdminBlogPermission, self).get_form(request, obj,
+        form = super(BlogAdminPermission, self).get_form(request, obj,
                                                          **kwargs)
         if request.user.is_superuser:
             return form
@@ -75,7 +75,7 @@ class BlogPostVideoInline(admin.StackedInline):
 
 
 @apply_opps_rules('blogs')
-class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
+class BlogPostAdmin(ContainerAdmin, BlogAdminPermission):
     form = BlogPostAdminForm
     inlines = [ContainerImageInline, BlogPostAudioInline, BlogPostVideoInline]
     list_display = ['title', 'category', 'published', 'get_http_absolute_url']
@@ -195,7 +195,7 @@ class CategoryAdmin(PublishableAdmin):
 
 
 @apply_opps_rules('blogs')
-class BlogLinkAdmin(AdminBlogPermission):
+class BlogLinkAdmin(BlogAdminPermission):
     list_display = ['name', 'link', 'published']
 
     fieldsets = (
