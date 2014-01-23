@@ -121,6 +121,7 @@ class BlogAdmin(NotUserPublishableAdmin):
     prepopulated_fields = {"slug": ["name"]}
     filter_horizontal = ('user',)
     raw_id_fields = ['main_image', ]
+    search_fields = ('name',)
     list_display = ['name', 'site', 'published']
     list_filter = ['date_available', 'published']
 
