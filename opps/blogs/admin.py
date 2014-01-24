@@ -62,6 +62,8 @@ class BlogPostRelatedInline(admin.TabularInline):
     classes = ('collapse',)
     verbose_name = _(u'Related blog post')
     verbose_name_plural = _(u'Related blog posts')
+    sortable_field_name = 'order'
+
 
 @apply_opps_rules('blogs')
 class BlogPostAudioInline(admin.StackedInline):
@@ -88,7 +90,6 @@ class BlogPostVideoInline(admin.StackedInline):
 @apply_opps_rules('blogs')
 class BlogPostAdmin(ContainerAdmin, BlogAdminPermission):
     form = BlogPostAdminForm
-    #inlines = [ContainerImageInline, BlogPostAudioInline, BlogPostVideoInline] # Not being used now
     inlines = [BlogPostRelatedInline]
     list_display = ['title', 'category', 'published', 'get_http_absolute_url']
     raw_id_fields = ['main_image', 'channel', 'albums', 'category']
@@ -164,8 +165,7 @@ class CategoryAdmin(PublishableAdmin):
     fieldsets = (
         (_(u'Identification'), {
             'fields': ('blog', 'site', 'parent', 'name', 'slug',
-                       ('show_in_menu',),
-                        'group')}),
+                       ('show_in_menu',), 'group')}),
         (_(u'Publication'), {
             'classes': ('extrapretty'),
             'fields': ('published', 'date_available')}),
