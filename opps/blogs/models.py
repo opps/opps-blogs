@@ -220,7 +220,10 @@ class BlogPostRelated(models.Model):
         ordering = ('order',)
 
     def __unicode__(self):
-        return u"{0}->{1}".format(self.related.slug, self.blogpost.slug)
+        if self.related and self.blogpost:
+            return u"{0}->{1}".format(self.related.slug, self.blogpost.slug)
+        return None
+
 
 class BlogLink(NotUserPublishable):
     blog = models.ForeignKey('blogs.Blog', related_name='links')
