@@ -11,7 +11,7 @@ from opps.containers.admin import ContainerAdmin
 from opps.channels.models import Channel
 
 from .forms import BlogPostAdminForm
-from .models import (Category, Blog, BlogPost, BlogPostAudio, BlogPostVideo,
+from .models import (Category, Blog, BlogPost, BlogPostRelated, BlogPostAudio, BlogPostVideo,
                      BlogLink)
 
 from .conf import settings
@@ -52,6 +52,17 @@ class AdminBlogPermission(AdminViewPermission):
             return False
         return True
 
+@apply_opps_rules('blogs')
+class BlogPostRelatedInline(admin.TabularInline):
+    model = BlogPostRelated
+    fk_name = 'blogpost'
+    raw_id_fields = ['related']
+    actions = None
+    ordering = ('order',)
+    extra = 1
+    classes = ('collapse',)
+    verbose_name = _(u'Related blog post')
+    verbose_name_plural = _(u'Related blog posts')
 
 @apply_opps_rules('blogs')
 class BlogPostAudioInline(admin.StackedInline):
@@ -78,7 +89,8 @@ class BlogPostVideoInline(admin.StackedInline):
 @apply_opps_rules('blogs')
 class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
     form = BlogPostAdminForm
-    inlines = [ContainerImageInline, BlogPostAudioInline, BlogPostVideoInline]
+    #inlines = [ContainerImageInline, BlogPostAudioInline, BlogPostVideoInline] # Not being used now
+    inlines = [BlogPostRelatedInline]
     list_display = ['title', 'category', 'published', 'get_http_absolute_url']
     raw_id_fields = ['main_image', 'channel', 'albums', 'category']
 
@@ -87,9 +99,8 @@ class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
             'fields': ('blog', 'site', 'title', 'slug',
                        'get_http_absolute_url', 'short_url')}),
         (_(u'Content'), {
-            'fields': ('hat', 'short_title', 'headline', 'content',
-                       ('main_image', 'image_thumb'), 'source', 'tags',
-                       'accept_comments')}),
+            'fields': ('headline', 'content', ('main_image', 'image_thumb'),
+                       'source', 'tags', 'accept_comments')}),
         (_(u'Relationships'), {
             'fields': ('albums', 'category')}),
         (_(u'Publication'), {

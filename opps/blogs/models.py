@@ -173,6 +173,13 @@ class BlogPost(Article):
     accept_comments = models.BooleanField(_(u'Accept comments?'),
                                           default=True)
 
+    related_blogposts = models.ManyToManyField(
+        'blogs.BlogPost',
+        null=True, blank=True,
+        related_name='blogpost_relatedblogposts',
+        through='blogs.BlogPostRelated',
+    )
+
     class Meta:
         verbose_name = _(u'Blog post')
         verbose_name_plural = _(u'Blog Posts')
@@ -187,6 +194,33 @@ class BlogPost(Article):
         return u"/{}/{}/{}/{}.html".format(settings.OPPS_BLOGS_CHANNEL,
                                            self.blog.slug, slug, self.slug)
 
+class BlogPostRelated(models.Model):
+
+    blogpost = models.ForeignKey(
+        'blogs.BlogPost',
+        verbose_name=_(u'BlogPost'),
+        null=True,
+        blank=True,
+        related_name='blogpostrelated_blogpost',
+        on_delete=models.SET_NULL
+    )
+    related = models.ForeignKey(
+        'blogs.BlogPost',
+        verbose_name=_(u'Related BlogPost'),
+        null=True,
+        blank=True,
+        related_name='blogpostrelated_related',
+        on_delete=models.SET_NULL
+    )
+    order = models.PositiveIntegerField(_(u'Order'), default=0)
+
+    class Meta:
+        verbose_name = _('Related content')
+        verbose_name_plural = _('Related contents')
+        ordering = ('order',)
+
+    def __unicode__(self):
+        return u"{0}->{1}".format(self.related.slug, self.blogpost.slug)
 
 class BlogLink(NotUserPublishable):
     blog = models.ForeignKey('blogs.Blog', related_name='links')
