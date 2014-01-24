@@ -51,6 +51,7 @@ class BlogAdminPermission(AdminViewPermission):
             return False
         return True
 
+
 @apply_opps_rules('blogs')
 class BlogPostRelatedInline(admin.TabularInline):
     model = BlogPostRelated
