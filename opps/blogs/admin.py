@@ -17,30 +17,29 @@ from .models import (Category, Blog, BlogPost, BlogPostRelated, BlogPostAudio, B
 from .conf import settings
 
 
-class AdminBlogPermission(AdminViewPermission):
+class BlogAdminPermission(AdminViewPermission):
 
     def queryset(self, request):
-        queryset = super(AdminBlogPermission, self).queryset(request)
+        queryset = super(BlogAdminPermission, self).queryset(request)
         if request.user.is_superuser:
             return queryset
 
-        try:
-            blogpermission = Blog.objects.filter(user=request.user)
-            return queryset.filter(blog__in=blogpermission)
-        except Blog.DoesNotExist:
-            return queryset.none()
+        blogs = Blog.objects.filter(user=request.user)
+        if blogs.exists():
+            return queryset.filter(blog__in=blogs)
+        return queryset.none()
 
     def get_form(self, request, obj=None, **kwargs):
-        form = super(AdminBlogPermission, self).get_form(request, obj,
+        form = super(BlogAdminPermission, self).get_form(request, obj,
                                                          **kwargs)
         if request.user.is_superuser:
             return form
-        try:
-            blogpermission = Blog.objects.filter(user=request.user)
+
+        blogs = Blog.objects.filter(user=request.user)
+        if blogs.exists():
             form.base_fields['blog'].choices = (
-                (b.id, b.name) for b in blogpermission)
-        except Blog.DoesNotExist:
-            pass
+                (b.id, b.name) for b in blogs
+            )
         return form
 
     def has_add_permission(self, request):
@@ -87,7 +86,7 @@ class BlogPostVideoInline(admin.StackedInline):
 
 
 @apply_opps_rules('blogs')
-class BlogPostAdmin(ContainerAdmin, AdminBlogPermission):
+class BlogPostAdmin(ContainerAdmin, BlogAdminPermission):
     form = BlogPostAdminForm
     #inlines = [ContainerImageInline, BlogPostAudioInline, BlogPostVideoInline] # Not being used now
     inlines = [BlogPostRelatedInline]
@@ -133,6 +132,7 @@ class BlogAdmin(NotUserPublishableAdmin):
     prepopulated_fields = {"slug": ["name"]}
     filter_horizontal = ('user',)
     raw_id_fields = ['main_image', ]
+    search_fields = ('name',)
     list_display = ['name', 'site', 'published']
     list_filter = ['date_available', 'published']
 
@@ -207,7 +207,7 @@ class CategoryAdmin(PublishableAdmin):
 
 
 @apply_opps_rules('blogs')
-class BlogLinkAdmin(AdminBlogPermission):
+class BlogLinkAdmin(BlogAdminPermission):
     list_display = ['name', 'link', 'published']
 
     fieldsets = (
