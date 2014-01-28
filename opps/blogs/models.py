@@ -181,6 +181,7 @@ class BlogPost(Article):
     )
 
     class Meta:
+        ordering = ['-date_available']
         verbose_name = _(u'Blog post')
         verbose_name_plural = _(u'Blog Posts')
 
