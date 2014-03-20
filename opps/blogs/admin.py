@@ -100,7 +100,7 @@ class BlogPostAdmin(ContainerAdmin, BlogAdminPermission):
             'fields': ('blog', 'site', 'title', 'slug',
                        'get_http_absolute_url', 'short_url')}),
         (_(u'Content'), {
-            'fields': ('headline', 'content', ('main_image', 'image_thumb'),
+            'fields': ('hat', 'short_title', 'headline', 'content', ('main_image', 'image_thumb'),
                        'source', 'tags', 'accept_comments')}),
         (_(u'Relationships'), {
             'fields': ('albums', 'category')}),
