@@ -118,6 +118,24 @@ class BlogPostList(BaseListView):
             blog=self.blog_obj,
             date_available__lte=timezone.now(),
             published=True)
+
+        return self.article
+
+
+class BlogPostDateList(BlogPostList):
+    def get_queryset(self):
+        self.long_slug = self.kwargs['blog__slug']
+        self.year = int(self.kwargs['year'])
+        self.month = int(self.kwargs['month'])
+        self.blog_obj = get_object_or_404(Blog, slug=self.long_slug)
+
+        self.article = self.model.objects.filter(
+            site_domain=self.site.domain,
+            blog=self.blog_obj,
+            date_available__year=self.year,
+            date_available__month=self.month,
+            published=True)
+
         return self.article
 
 

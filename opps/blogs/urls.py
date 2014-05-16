@@ -4,7 +4,7 @@ from django.conf.urls import patterns, url
 from django.views.decorators.cache import cache_page
 
 from .views import (BlogPostList, BlogPostDetail, BlogList, BlogUsersList,
-                    CategoryList, BlogTagList)
+                    CategoryList, BlogTagList, BlogPostDateList)
 from .conf import settings
 
 
@@ -19,6 +19,10 @@ urlpatterns = patterns(
         settings.OPPS_BLOGS_CHANNEL),
         cache_page(settings.OPPS_CACHE_EXPIRE)(BlogTagList.as_view()),
         name='blogtag-list',
+        kwargs={'channel__long_slug': settings.OPPS_BLOGS_CHANNEL}),
+    url(r'^%s/(?P<blog__slug>[\w\b-]+)/(?P<year>[0-9]{4})/(?P<month>[0-9]+)/?$' % settings.OPPS_BLOGS_CHANNEL,
+        cache_page(settings.OPPS_CACHE_EXPIRE)(BlogPostDateList.as_view()),
+        name='blogpost-date-list',
         kwargs={'channel__long_slug': settings.OPPS_BLOGS_CHANNEL}),
     url(r'^{}/(?P<blog__slug>[\w\b-]+)/(?P<category_long_slug>[\w\b//-]+)/(?P<slug>[\w-]+)\.html$'.format(
         settings.OPPS_BLOGS_CHANNEL),
