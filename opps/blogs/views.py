@@ -109,6 +109,7 @@ class BlogPostList(BaseListView):
     type = "blogs"
     channel_long_slug = []
     paginate_suffix = 'list'
+    paginate_by = getattr(settings, 'OPPS_BLOGS_POST_PAGINATE_BY', 15)
 
     def get_queryset(self):
         self.long_slug = self.kwargs['blog__slug']
