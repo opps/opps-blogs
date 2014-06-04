@@ -22,6 +22,14 @@ def get_blogs(type='blog'):
 
 
 @register.assignment_tag
+def get_blog(slug):
+    try:
+        return Blog.objects.get(slug=slug)
+    except:
+        return None
+
+
+@register.assignment_tag
 def get_blog_posts(slug):
     blog = get_object_or_404(Blog, slug=slug)
     posts = BlogPost.objects.filter(

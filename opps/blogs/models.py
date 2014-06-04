@@ -142,6 +142,12 @@ class Blog(NotUserPublishable, Slugged):
     def get_links(self):
         return self.links.filter(published=True)
 
+    def get_latest(self):
+        try:
+            return self.blogpost_set.latest()
+        except:
+            return None
+
     def get_categories(self):
         return self.categories.filter(published=True)
 
@@ -184,6 +190,7 @@ class BlogPost(Article):
         ordering = ['-date_available']
         verbose_name = _(u'Blog post')
         verbose_name_plural = _(u'Blog Posts')
+        get_latest_by = 'date_available'
 
     def get_absolute_url(self):
         try:
