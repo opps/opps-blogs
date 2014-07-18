@@ -102,6 +102,7 @@ class Blog(NotUserPublishable, Slugged):
     LAYOUT_MODES = (
         ('default', _(u'Default')),
         ('resumed', _(u'Resumed')),
+        ('mix', _(u'Mix')),
     )
 
     user = models.ManyToManyField(settings.AUTH_USER_MODEL,
