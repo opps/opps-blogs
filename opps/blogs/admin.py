@@ -165,7 +165,7 @@ class CategoryAdmin(PublishableAdmin):
 
     fieldsets = (
         (_(u'Identification'), {
-            'fields': ('blog', 'site', 'parent', 'name', 'slug',
+            'fields': ('blog', 'site', 'parent', 'name', 'slug', 'order',
                        ('show_in_menu',), 'group')}),
         (_(u'Publication'), {
             'classes': ('extrapretty'),
