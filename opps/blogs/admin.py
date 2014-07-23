@@ -156,9 +156,9 @@ class BlogAdmin(NotUserPublishableAdmin):
 @apply_opps_rules('blogs')
 class CategoryAdmin(PublishableAdmin):
     prepopulated_fields = {"slug": ("name",)}
-    list_display = ['name', 'parent', 'site', 'date_available',
+    list_display = ['name', 'parent', 'site', 'blog', 'date_available',
                     'order', 'published']
-    list_filter = ['date_available', 'published', 'site', 'parent']
+    list_filter = ['date_available', 'published', 'site', 'parent', 'blog']
     search_fields = ['name']
     exclude = ('long_slug',)
     raw_id_fields = ['parent']
