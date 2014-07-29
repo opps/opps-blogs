@@ -17,20 +17,24 @@ from .conf import settings
 User = get_user_model()
 
 
-class BaseListView(ListView):
+class BlogMixin(object):
+
+    def get_context_data(self, **kwargs):
+        context = super(BlogMixin, self).get_context_data(**kwargs)
+        if 'blog__slug' in self.kwargs.keys():
+            context['blog'] = get_object_or_404(Blog,
+                                                slug=self.kwargs['blog__slug'])
+        return context
+
+
+class BaseListView(BlogMixin, ListView):
+
     def dispatch(self, request, *args, **kwargs):
         self.site = get_current_site(request)
         self.channel = get_object_or_404(Channel,
                                          slug=settings.OPPS_BLOGS_CHANNEL,
                                          site=self.site)
         return super(BaseListView, self).dispatch(request, *args, **kwargs)
-
-    def get_context_data(self, **kwargs):
-        context = super(BaseListView, self).get_context_data(**kwargs)
-        if 'blog__slug' in self.kwargs.keys():
-            context['blog'] = get_object_or_404(Blog,
-                                                slug=self.kwargs['blog__slug'])
-        return context
 
     def get_template_names(self):
         templates = super(BaseListView, self).get_template_names()
@@ -206,7 +210,7 @@ class BlogPostDetail(DetailView):
         return self.article
 
 
-class BlogTagList(TagList):
+class BlogTagList(BlogMixin, TagList):
     model = BlogPost
 
     def get_template_names(self):
