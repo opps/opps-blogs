@@ -6,13 +6,16 @@ from django.utils.translation import ugettext_lazy as _
 from opps.core.admin import (apply_opps_rules, PublishableAdmin,
                              NotUserPublishableAdmin)
 from opps.contrib.multisite.admin import AdminViewPermission
-from opps.containers.admin import ContainerImageInline
+# from opps.containers.admin import ContainerImageInline
 from opps.containers.admin import ContainerAdmin
 from opps.channels.models import Channel
 
 from .forms import BlogPostAdminForm
-from .models import (Category, Blog, BlogPost, BlogPostRelated, BlogPostAudio, BlogPostVideo,
-                     BlogLink)
+from .models import (
+    Category, Blog, BlogPost,
+    BlogPostRelated, BlogPostAudio,
+    BlogPostVideo, BlogLink
+)
 
 from .conf import settings
 
@@ -100,7 +103,8 @@ class BlogPostAdmin(ContainerAdmin, BlogAdminPermission):
             'fields': ('blog', 'site', 'title', 'slug',
                        'get_http_absolute_url', 'short_url')}),
         (_(u'Content'), {
-            'fields': ('hat', 'short_title', 'headline', 'content', ('main_image', 'image_thumb'),
+            'fields': ('hat', 'short_title', 'headline', 'content',
+                       ('main_image', 'image_thumb'),
                        'source', 'tags', 'accept_comments')}),
         (_(u'Relationships'), {
             'fields': ('albums', 'category')}),
@@ -127,6 +131,10 @@ class BlogPostAdmin(ContainerAdmin, BlogAdminPermission):
         if request.user.is_superuser:
             return True
         return super(BlogPostAdmin, self).has_change_permission(request, obj)
+
+    def get_list_filter(self, request):
+        list_filter = super(BlogPostAdmin, self).list_filter
+        return list_filter + ['category', 'blog']
 
 
 @apply_opps_rules('blogs')
