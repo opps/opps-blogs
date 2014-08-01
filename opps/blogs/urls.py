@@ -1,10 +1,9 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.conf.urls import patterns, url
 from django.views.decorators.cache import cache_page
 
 from .views import (BlogPostList, BlogPostDetail, BlogList, BlogUsersList,
-                    CategoryList, BlogTagList, BlogPostDateList)
+                    CategoryList, BlogTagList, BlogPostDateList, BlogPostFeed)
 from .conf import settings
 
 
@@ -15,6 +14,9 @@ urlpatterns = patterns(
         cache_page(settings.OPPS_CACHE_EXPIRE)(BlogUsersList.as_view()),
         name='blogusers-list',
         kwargs={'channel__long_slug': settings.OPPS_BLOGS_CHANNEL}),
+    url(r'^{}/(?P<blog__slug>[\w\b-]+)/rss/?$'.format(
+        settings.OPPS_BLOGS_CHANNEL),
+        cache_page(settings.OPPS_CACHE_EXPIRE)(BlogPostFeed())),
     url(r'^{}/(?P<blog__slug>[\w\b-]+)/tag/(?P<tag>[\w-]+)$'.format(
         settings.OPPS_BLOGS_CHANNEL),
         cache_page(settings.OPPS_CACHE_EXPIRE)(BlogTagList.as_view()),

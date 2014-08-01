@@ -1,12 +1,13 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 from django.contrib.sites.models import get_current_site
 from django.utils import timezone
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
+from django.utils.translation import ugettext_lazy as _
 
 from opps.channels.models import Channel
 from opps.views.generic.list import ListView
+from opps.contrib.feeds.views import ItemFeed
 from opps.views.generic.detail import DetailView
 from opps.core.tags.views import TagList
 from opps.core.tags.models import Tag
@@ -125,6 +126,43 @@ class BlogPostList(BaseListView):
             published=True)
 
         return self.article
+
+
+class BlogPostFeed(ItemFeed):
+    link = "/rss"
+
+    def item_enclosure_url(self, item):
+        if item.main_image:
+            if item.main_image.archive:
+                i_url = item.main_image.archive.url
+            elif item.main_image.archive_link:
+                i_url = item.main_image.archive_link
+            else:
+                i_url = item.main_image.image_url()
+
+            m_url = getattr(settings, 'MEDIA_URL', '')
+            if not m_url.startswith('http') and not i_url.startswith('http'):
+                i_url = "http://" + item.site_domain + i_url
+            return i_url
+
+    def title(self):
+        return _("{0}'s news".format(get_current_site(self.request)))
+
+    def description(self):
+        return _("Latest news on {0}'s".format(get_current_site(self.request)))
+
+    def get_object(self, request, blog__slug):
+        blog = get_object_or_404(Blog, slug=blog__slug)
+        self.request = request
+        return blog
+
+    def items(self, obj):
+        articles = BlogPost.objects.filter(
+            blog=obj,
+            date_available__lte=timezone.now(),
+            published=True)
+
+        return articles
 
 
 class BlogPostDateList(BlogPostList):
