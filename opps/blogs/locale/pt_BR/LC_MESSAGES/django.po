@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opps-blogs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-05 18:25-0300\n"
-"PO-Revision-Date: 2014-08-05 18:27-0300\n"
+"POT-Creation-Date: 2014-08-05 20:04-0300\n"
+"PO-Revision-Date: 2014-08-05 20:04-0300\n"
 "Last-Translator: Paulo Roberto <proberto.macedo@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <opps-developers@googlegroups.com>\n"
 "Language: pt_BR\n"
@@ -19,44 +19,52 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 1.5.4\n"
 
-#: admin.py:68
+#: admin.py:67
 msgid "Related blog post"
 msgstr "Post de blog relacionado"
 
-#: admin.py:69
+#: admin.py:68
 msgid "Related blog posts"
 msgstr "Posts de blog relacionados"
 
-#: admin.py:103 admin.py:166 admin.py:191 admin.py:239
+#: admin.py:102 admin.py:179 admin.py:204 admin.py:252
 msgid "Identification"
 msgstr "Identificação"
 
-#: admin.py:106 models.py:202
+#: admin.py:105 models.py:223
 msgid "Content"
 msgstr "Conteúdo"
 
-#: admin.py:110
+#: admin.py:109
 msgid "Relationships"
 msgstr "Relacionamentos"
 
-#: admin.py:112 admin.py:169 admin.py:194 admin.py:241
+#: admin.py:111 admin.py:182 admin.py:207 admin.py:254
 msgid "Publication"
 msgstr "Publicação"
 
-#: admin.py:125
+#: admin.py:124
 #, python-format
 msgid "%s channel is not created"
 msgstr "O canal %s não foi criado"
 
-#: admin.py:150 models.py:188 models.py:195
+#: admin.py:149 models.py:195 models.py:202
 msgid "Related blog"
 msgstr "Blog relacionado"
 
-#: admin.py:151 models.py:123 models.py:196
+#: admin.py:150 models.py:123 models.py:203
 msgid "Related blogs"
 msgstr "Blogs relacionados"
 
-#: models.py:25 models.py:113 models.py:276
+#: admin.py:163 models.py:211 models.py:216
+msgid "Related channel"
+msgstr "Canal relacionado"
+
+#: admin.py:164 models.py:130 models.py:217
+msgid "Related channels"
+msgstr "Canais relacionados"
+
+#: models.py:25 models.py:113 models.py:297
 msgid "Name"
 msgstr "Nome"
 
@@ -72,7 +80,7 @@ msgstr "Mostrar no menu?"
 msgid "Group sub-channel?"
 msgstr "Agrupar sub-canais?"
 
-#: models.py:30 models.py:192 models.py:261
+#: models.py:30 models.py:199 models.py:213 models.py:282
 msgid "Order"
 msgstr "Ordem"
 
@@ -80,7 +88,7 @@ msgstr "Ordem"
 msgid "Parent"
 msgstr "Categoria Pai"
 
-#: models.py:43 models.py:204
+#: models.py:43 models.py:225
 msgid "Category"
 msgstr "Categoria"
 
@@ -124,87 +132,88 @@ msgstr "Tipo de Blog"
 msgid "Layout mode"
 msgstr "Tipo de Layout"
 
-#: models.py:137
+#: models.py:144
 msgid "OPPS_BLOG_PROFILE was not found on settings"
 msgstr "Variável OPPS_BLOG_PROFILE não está setada no settings"
 
-#: models.py:142
+#: models.py:149
 msgid "OPPS_BLOGS_PROFILE must be of the form \"app_label.model_name\""
 msgstr "OPPS_BLOGS_PROFILE é da forma \"app_label.model_name\""
 
-#: models.py:170 models.py:180 models.py:201 models.py:288 models.py:301
+#: models.py:177 models.py:187 models.py:208 models.py:222 models.py:310
+#: models.py:323
 msgid "Blog"
 msgstr "Blog"
 
-#: models.py:171
+#: models.py:178
 msgid "Blogs"
 msgstr "Blogs"
 
-#: models.py:209
+#: models.py:230
 msgid "Albums"
 msgstr "Álbuns"
 
-#: models.py:216
+#: models.py:237
 msgid "Accept comments?"
 msgstr "Aceitar comentários?"
 
-#: models.py:229
+#: models.py:250
 msgid "Blog post"
 msgstr "Post do Blog"
 
-#: models.py:230
+#: models.py:251
 msgid "Blog Posts"
 msgstr "Posts do Blog"
 
-#: models.py:247
+#: models.py:268
 msgid "BlogPost"
 msgstr "Post do Blog"
 
-#: models.py:255
+#: models.py:276
 msgid "Related BlogPost"
 msgstr "Post do Blog Relacionado"
 
-#: models.py:264
+#: models.py:285
 msgid "Related content"
 msgstr "Conteúdo relacionado"
 
-#: models.py:265
+#: models.py:286
 msgid "Related contents"
 msgstr "Conteúdos relacionados"
 
-#: models.py:277
+#: models.py:298
 msgid "Link"
 msgstr "Link"
 
-#: models.py:282
+#: models.py:304
 msgid "Blog Link"
 msgstr "Link de Blog"
 
-#: models.py:283
+#: models.py:305
 msgid "Blog Links"
 msgstr "Links de Blog"
 
-#: models.py:291
+#: models.py:313
 msgid "Video"
 msgstr "Vídeo"
 
-#: models.py:295
+#: models.py:317
 msgid "Blogpost Video"
 msgstr "Vídeo de Post do Blog"
 
-#: models.py:296
+#: models.py:318
 msgid "Blogpost Videos"
 msgstr "Vídeos de Post do Blog"
 
-#: models.py:303
+#: models.py:325
 msgid "Audio"
 msgstr "Áudio"
 
-#: models.py:307
+#: models.py:329
 msgid "Blogpost Audio"
 msgstr "Áudio de Post do Blog"
 
-#: models.py:308
+#: models.py:330
 msgid "Blogpost Audios"
 msgstr "Áudios de Post do Blog"
 

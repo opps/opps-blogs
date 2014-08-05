@@ -14,9 +14,8 @@ from opps.channels.models import Channel
 
 from .forms import BlogPostAdminForm
 from .models import (
-    Category, Blog, BlogRelated, BlogPost, BlogPostRelated, BlogPostAudio,
-    BlogPostVideo, BlogLink
-)
+    Category, Blog, BlogRelated, BlogChannelRelated, BlogPost, BlogPostRelated,
+    BlogPostAudio, BlogPostVideo, BlogLink, )
 
 from .conf import settings
 
@@ -153,10 +152,24 @@ class BlogRelatedInline(admin.TabularInline):
 
 
 @apply_opps_rules('blogs')
+class BlogChannelRelatedInline(admin.TabularInline):
+    model = BlogChannelRelated
+    fk_name = 'blog'
+    raw_id_fields = ['related']
+    actions = None
+    ordering = ('order',)
+    extra = 1
+    classes = ('collapse',)
+    verbose_name = _('Related channel')
+    verbose_name_plural = _('Related channels')
+    sortable_field_name = 'order'
+
+
+@apply_opps_rules('blogs')
 class BlogAdmin(NotUserPublishableAdmin):
     prepopulated_fields = {"slug": ["name"]}
     filter_horizontal = ('user',)
-    inlines = [BlogRelatedInline]
+    inlines = [BlogRelatedInline, BlogChannelRelatedInline]
     raw_id_fields = ['main_image', ]
     search_fields = ('name',)
     list_display = ['name', 'site', 'published']

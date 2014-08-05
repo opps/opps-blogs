@@ -125,6 +125,13 @@ class Blog(NotUserPublishable, Slugged):
         blank=True,
         related_name="blog_relatedblogs",
         through="blogs.BlogRelated")
+    related_channels = models.ManyToManyField(
+        "channels.Channel",
+        verbose_name=_('Related channels'),
+        null=True,
+        blank=True,
+        related_name="blog_relatedchannels",
+        through="blogs.BlogChannelRelated")
 
     def __unicode__(self):
         return self.name
@@ -180,7 +187,7 @@ class BlogRelated(models.Model):
         verbose_name=_("Blog"),
         related_name="blogrelated_blog",
         on_delete=models.SET_NULL)
-    
+
     related = models.ForeignKey(
         "blogs.Blog",
         null=True,
@@ -194,6 +201,20 @@ class BlogRelated(models.Model):
     class Meta:
         verbose_name = _('Related blog')
         verbose_name_plural = _('Related blogs')
+        ordering = ('order',)
+
+
+class BlogChannelRelated(models.Model):
+    blog = models.ForeignKey("blogs.Blog", verbose_name=_("Blog"))
+
+    related = models.ForeignKey(
+        "channels.Channel", verbose_name=_("Related channel"))
+
+    order = models.PositiveIntegerField(_('Order'), default=0)
+
+    class Meta:
+        verbose_name = _('Related channel')
+        verbose_name_plural = _('Related channels')
         ordering = ('order',)
 
 
@@ -276,7 +297,8 @@ class BlogLink(NotUserPublishable):
     name = models.CharField(_("Name"), max_length=140)
     link = models.URLField(_('Link'))
 
-    __unicode__ = lambda self: "{} - {}".format(self.name, self.link)
+    def __unicode__(self):
+        return "{} - {}".format(self.name, self.link)
 
     class Meta:
         verbose_name = _('Blog Link')
