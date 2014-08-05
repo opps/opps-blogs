@@ -34,7 +34,7 @@ class Category(MPTTModel, NotUserPublishable, Slugged):
         null=True, blank=True,
         verbose_name=_('Parent'),
         limit_choices_to={
-            'parent__isnull': True, # We don't allow subsubcategories
+            'parent__isnull': True,  # We don't allow subsubcategories
         }
     )
 
@@ -57,7 +57,7 @@ class Category(MPTTModel, NotUserPublishable, Slugged):
 
     def get_absolute_url(self):
         return "/{}/{}{}".format(settings.OPPS_BLOGS_CHANNEL,
-                                  self.blog.slug, self.__unicode__())
+                                 self.blog.slug, self.__unicode__())
 
     @property
     def root(self):
@@ -118,6 +118,13 @@ class Blog(NotUserPublishable, Slugged):
                             choices=settings.OPPS_BLOGS_TYPES)
     layout_mode = models.CharField(_('Layout mode'), max_length=200,
                                    default='default', choices=LAYOUT_MODES)
+    related_blogs = models.ManyToManyField(
+        "blogs.Blog",
+        verbose_name=_('Related blogs'),
+        null=True,
+        blank=True,
+        related_name="blog_relatedblogs",
+        through="blogs.BlogRelated")
 
     def __unicode__(self):
         return self.name
@@ -165,6 +172,31 @@ class Blog(NotUserPublishable, Slugged):
         ordering = ('name', )
 
 
+class BlogRelated(models.Model):
+    blog = models.ForeignKey(
+        "blogs.Blog",
+        null=True,
+        blank=True,
+        verbose_name=_("Blog"),
+        related_name="blogrelated_blog",
+        on_delete=models.SET_NULL)
+    
+    related = models.ForeignKey(
+        "blogs.Blog",
+        null=True,
+        blank=True,
+        verbose_name=_("Related blog"),
+        related_name="blogrelated_related",
+        on_delete=models.SET_NULL)
+
+    order = models.PositiveIntegerField(_('Order'), default=0)
+
+    class Meta:
+        verbose_name = _('Related blog')
+        verbose_name_plural = _('Related blogs')
+        ordering = ('order',)
+
+
 class BlogPost(Article):
     blog = models.ForeignKey('blogs.Blog', verbose_name=_('Blog'))
     content = models.TextField(_("Content"))
@@ -186,7 +218,8 @@ class BlogPost(Article):
 
     related_blogposts = models.ManyToManyField(
         'blogs.BlogPost',
-        null=True, blank=True,
+        null=True,
+        blank=True,
         related_name='blogpost_relatedblogposts',
         through='blogs.BlogPostRelated',
     )
@@ -205,10 +238,10 @@ class BlogPost(Article):
             slug = 'sem-categoria'
 
         return "/{}/{}/{}/{}.html".format(settings.OPPS_BLOGS_CHANNEL,
-                                           self.blog.slug, slug, self.slug)
+                                          self.blog.slug, slug, self.slug)
+
 
 class BlogPostRelated(models.Model):
-
     blogpost = models.ForeignKey(
         'blogs.BlogPost',
         verbose_name=_('BlogPost'),

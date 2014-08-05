@@ -1,19 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from opps.core.admin import (apply_opps_rules, PublishableAdmin,
                              NotUserPublishableAdmin)
 from opps.contrib.multisite.admin import AdminViewPermission
-# from opps.containers.admin import ContainerImageInline
+
 from opps.containers.admin import ContainerAdmin
 from opps.channels.models import Channel
 
 from .forms import BlogPostAdminForm
 from .models import (
-    Category, Blog, BlogPost,
-    BlogPostRelated, BlogPostAudio,
+    Category, Blog, BlogRelated, BlogPost, BlogPostRelated, BlogPostAudio,
     BlogPostVideo, BlogLink
 )
 
@@ -64,8 +65,8 @@ class BlogPostRelatedInline(admin.TabularInline):
     ordering = ('order',)
     extra = 1
     classes = ('collapse',)
-    verbose_name = _(u'Related blog post')
-    verbose_name_plural = _(u'Related blog posts')
+    verbose_name = _('Related blog post')
+    verbose_name_plural = _('Related blog posts')
     sortable_field_name = 'order'
 
 
@@ -99,16 +100,16 @@ class BlogPostAdmin(ContainerAdmin, BlogAdminPermission):
     raw_id_fields = ['main_image', 'channel', 'albums', 'category']
 
     fieldsets = (
-        (_(u'Identification'), {
+        (_('Identification'), {
             'fields': ('blog', 'site', 'title', 'slug',
                        'get_http_absolute_url', 'short_url')}),
-        (_(u'Content'), {
+        (_('Content'), {
             'fields': ('hat', 'short_title', 'headline', 'content',
                        ('main_image', 'image_thumb'),
                        'source', 'tags', 'accept_comments')}),
-        (_(u'Relationships'), {
+        (_('Relationships'), {
             'fields': ('albums', 'category')}),
-        (_(u'Publication'), {
+        (_('Publication'), {
             'classes': ('extrapretty'),
             'fields': ('published', 'date_available',
                        'show_on_root_channel', 'in_containerboxes')}),
@@ -121,7 +122,7 @@ class BlogPostAdmin(ContainerAdmin, BlogAdminPermission):
                 slug=settings.OPPS_BLOGS_CHANNEL
             )
         except Channel.DoesNotExist:
-            raise Channel.DoesNotExist(_(u'%s channel is not created') % (
+            raise Channel.DoesNotExist(_('%s channel is not created') % (
                 settings.OPPS_BLOGS_CHANNEL)
             )
 
@@ -138,19 +139,34 @@ class BlogPostAdmin(ContainerAdmin, BlogAdminPermission):
 
 
 @apply_opps_rules('blogs')
+class BlogRelatedInline(admin.TabularInline):
+    model = BlogRelated
+    fk_name = 'blog'
+    raw_id_fields = ['related']
+    actions = None
+    ordering = ('order',)
+    extra = 1
+    classes = ('collapse',)
+    verbose_name = _('Related blog')
+    verbose_name_plural = _('Related blogs')
+    sortable_field_name = 'order'
+
+
+@apply_opps_rules('blogs')
 class BlogAdmin(NotUserPublishableAdmin):
     prepopulated_fields = {"slug": ["name"]}
     filter_horizontal = ('user',)
+    inlines = [BlogRelatedInline]
     raw_id_fields = ['main_image', ]
     search_fields = ('name',)
     list_display = ['name', 'site', 'published']
     list_filter = ['date_available', 'published']
 
     fieldsets = (
-        (_(u'Identification'), {
+        (_('Identification'), {
             'fields': ('site', 'type', 'name', 'slug', 'description',
                        'layout_mode', 'main_image', 'user')}),
-        (_(u'Publication'), {
+        (_('Publication'), {
             'classes': ('extrapretty'),
             'fields': ('published', 'date_available')}),
     )
@@ -172,10 +188,10 @@ class CategoryAdmin(PublishableAdmin):
     raw_id_fields = ['parent']
 
     fieldsets = (
-        (_(u'Identification'), {
+        (_('Identification'), {
             'fields': ('blog', 'site', 'parent', 'name', 'slug', 'order',
-                       ('show_in_menu',), 'group')}),
-        (_(u'Publication'), {
+                       ('show_in_men',), 'group')}),
+        (_('Publication'), {
             'classes': ('extrapretty'),
             'fields': ('published', 'date_available')}),
     )
@@ -220,9 +236,9 @@ class BlogLinkAdmin(BlogAdminPermission):
     list_display = ['name', 'link', 'published']
 
     fieldsets = (
-        (_(u'Identification'), {
+        (_('Identification'), {
             'fields': ('blog', 'name', 'link')}),
-        (_(u'Publication'), {
+        (_('Publication'), {
             'classes': ('extrapretty'),
             'fields': ('published',)}),
     )
