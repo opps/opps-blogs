@@ -157,12 +157,18 @@ class BlogPostFeed(ItemFeed):
         return blog
 
     def items(self, obj):
-        articles = BlogPost.objects.filter(
+        filters = self.build_filters().get('filter', {})
+        excludes = self.build_filters().get('exclude', {})
+
+        qs = BlogPost.objects.filter(
             blog=obj,
             date_available__lte=timezone.now(),
-            published=True)
+            published=True,
+            **filters).exclude(
+                **excludes
+            ).order_by('-date_available')[:40]
 
-        return articles
+        return qs
 
 
 class BlogPostDateList(BlogPostList):
