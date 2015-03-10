@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-12 00:59-0300\n"
+"POT-Creation-Date: 2015-03-10 11:26-0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,131 +17,210 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:86 admin.py:123 admin.py:142 admin.py:186
+#: admin.py:67
+msgid "Related blog post"
+msgstr ""
+
+#: admin.py:68
+msgid "Related blog posts"
+msgstr ""
+
+#: admin.py:102 admin.py:179 admin.py:204 admin.py:252
 msgid "Identification"
 msgstr ""
 
-#: admin.py:89 models.py:121
+#: admin.py:105 models.py:223
 msgid "Content"
 msgstr ""
 
-#: admin.py:92
+#: admin.py:109
 msgid "Relationships"
 msgstr ""
 
-#: admin.py:94 admin.py:126 admin.py:146 admin.py:188
+#: admin.py:111 admin.py:182 admin.py:207 admin.py:254
 msgid "Publication"
 msgstr ""
 
-#: admin.py:107
+#: admin.py:124
 #, python-format
 msgid "%s channel is not created"
 msgstr ""
 
-#: models.py:23 models.py:77 models.py:152
+#: admin.py:149 models.py:195 models.py:202
+msgid "Related blog"
+msgstr ""
+
+#: admin.py:150 models.py:123 models.py:203
+msgid "Related blogs"
+msgstr ""
+
+#: admin.py:163 models.py:211 models.py:216
+msgid "Related channel"
+msgstr ""
+
+#: admin.py:164 models.py:130 models.py:217
+msgid "Related channels"
+msgstr ""
+
+#: models.py:25 models.py:113 models.py:297
 msgid "Name"
 msgstr ""
 
-#: models.py:24
+#: models.py:26
 msgid "Path name"
 msgstr ""
 
-#: models.py:26
+#: models.py:28
 msgid "Show in menu?"
 msgstr ""
 
-#: models.py:27
+#: models.py:29
 msgid "Group sub-channel?"
 msgstr ""
 
-#: models.py:28
+#: models.py:30 models.py:199 models.py:213 models.py:282
 msgid "Order"
 msgstr ""
 
-#: models.py:30
+#: models.py:35
 msgid "Parent"
 msgstr ""
 
-#: models.py:34 models.py:123
+#: models.py:43 models.py:225
 msgid "Category"
 msgstr ""
 
-#: models.py:35
+#: models.py:44
 msgid "Categories"
 msgstr ""
 
-#: models.py:76
+#: models.py:89
+msgid "The slug chosen already exists. Please try another."
+msgstr ""
+
+#: models.py:106
+msgid "Default"
+msgstr ""
+
+#: models.py:107
+msgid "Resumed"
+msgstr ""
+
+#: models.py:108
+msgid "Mix"
+msgstr ""
+
+#: models.py:112
 msgid "Users"
 msgstr ""
 
-#: models.py:78
+#: models.py:114
 msgid "Main Image"
 msgstr ""
 
-#: models.py:80
+#: models.py:116
 msgid "Description"
 msgstr ""
 
-#: models.py:81
+#: models.py:117
 msgid "Blog Type"
 msgstr ""
 
-#: models.py:92
+#: models.py:119
+msgid "Layout mode"
+msgstr ""
+
+#: models.py:144
 msgid "OPPS_BLOG_PROFILE was not found on settings"
 msgstr ""
 
-#: models.py:97
+#: models.py:149
 msgid "OPPS_BLOGS_PROFILE must be of the form \"app_label.model_name\""
 msgstr ""
 
-#: models.py:120 models.py:164 models.py:177
+#: models.py:177 models.py:187 models.py:208 models.py:222 models.py:310
+#: models.py:323
 msgid "Blog"
 msgstr ""
 
-#: models.py:128
+#: models.py:178
+msgid "Blogs"
+msgstr ""
+
+#: models.py:230
 msgid "Albums"
 msgstr ""
 
-#: models.py:136
+#: models.py:237
+msgid "Accept comments?"
+msgstr ""
+
+#: models.py:250
 msgid "Blog post"
 msgstr ""
 
-#: models.py:137
+#: models.py:251
 msgid "Blog Posts"
 msgstr ""
 
-#: models.py:153
+#: models.py:268
+msgid "BlogPost"
+msgstr ""
+
+#: models.py:276
+msgid "Related BlogPost"
+msgstr ""
+
+#: models.py:285
+msgid "Related content"
+msgstr ""
+
+#: models.py:286
+msgid "Related contents"
+msgstr ""
+
+#: models.py:298
 msgid "Link"
 msgstr ""
 
-#: models.py:158
+#: models.py:304
 msgid "Blog Link"
 msgstr ""
 
-#: models.py:159
+#: models.py:305
 msgid "Blog Links"
 msgstr ""
 
-#: models.py:167
+#: models.py:313
 msgid "Video"
 msgstr ""
 
-#: models.py:171
+#: models.py:317
 msgid "Blogpost Video"
 msgstr ""
 
-#: models.py:172
+#: models.py:318
 msgid "Blogpost Videos"
 msgstr ""
 
-#: models.py:179
+#: models.py:325
 msgid "Audio"
 msgstr ""
 
-#: models.py:183
+#: models.py:329
 msgid "Blogpost Audio"
 msgstr ""
 
-#: models.py:184
+#: models.py:330
 msgid "Blogpost Audios"
+msgstr ""
+
+#: views.py:149
+#, python-brace-format
+msgid "{0}'s news"
+msgstr ""
+
+#: views.py:152
+#, python-brace-format
+msgid "Latest news on {0}'s"
 msgstr ""

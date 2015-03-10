@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opps-blogs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-05 20:04-0300\n"
+"POT-Creation-Date: 2015-03-10 11:26-0300\n"
 "PO-Revision-Date: 2014-08-05 20:04-0300\n"
 "Last-Translator: Paulo Roberto <proberto.macedo@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <opps-developers@googlegroups.com>\n"
@@ -44,7 +44,6 @@ msgid "Publication"
 msgstr "Publicação"
 
 #: admin.py:124
-#, python-format
 msgid "%s channel is not created"
 msgstr "O canal %s não foi criado"
 
@@ -220,9 +219,9 @@ msgstr "Áudios de Post do Blog"
 #: views.py:149
 #, python-brace-format
 msgid "{0}'s news"
-msgstr ""
+msgstr "{0}'s notícias"
 
 #: views.py:152
 #, python-brace-format
 msgid "Latest news on {0}'s"
-msgstr ""
+msgstr "Últimas notícias on {0}'s"
