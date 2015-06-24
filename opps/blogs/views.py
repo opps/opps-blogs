@@ -118,7 +118,7 @@ class BlogPostList(BaseListView):
 
     def get_queryset(self):
         self.long_slug = self.kwargs['blog__slug']
-        self.blog_obj = get_object_or_404(Blog, slug=self.long_slug)
+        self.blog_obj = get_object_or_404(Blog, slug=self.long_slug, published=True)
         self.article = self.model.objects.filter(
             site_domain=self.site.domain,
             blog=self.blog_obj,
@@ -176,7 +176,7 @@ class BlogPostDateList(BlogPostList):
         self.long_slug = self.kwargs['blog__slug']
         self.year = int(self.kwargs['year'])
         self.month = int(self.kwargs['month'])
-        self.blog_obj = get_object_or_404(Blog, slug=self.long_slug)
+        self.blog_obj = get_object_or_404(Blog, slug=self.long_slug, published=True)
 
         self.article = self.model.objects.filter(
             site_domain=self.site.domain,
@@ -195,7 +195,7 @@ class CategoryList(BaseListView):
     def get_queryset(self):
         self.long_slug = self.kwargs['blog__slug']
         self.category_long_slug = self.kwargs['category_long_slug']
-        self.blog_obj = get_object_or_404(Blog, slug=self.long_slug)
+        self.blog_obj = get_object_or_404(Blog, slug=self.long_slug, published=True)
         self.article = self.model.objects.filter(
             site_domain=self.site.domain,
             blog=self.blog_obj,
@@ -223,7 +223,8 @@ class BlogPostDetail(DetailView):
 
         if 'blog__slug' in self.kwargs.keys():
             context['blog'] = get_object_or_404(Blog,
-                                                slug=self.kwargs['blog__slug'])
+                                                slug=self.kwargs['blog__slug'],
+                                                published=True)
 
         return context
 
