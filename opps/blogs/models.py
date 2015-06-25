@@ -132,6 +132,9 @@ class Blog(NotUserPublishable, Slugged):
         blank=True,
         related_name="blog_relatedchannels",
         through="blogs.BlogChannelRelated")
+    external = models.BooleanField(
+        verbose_name=_('External'),
+        default=False)
 
     def __unicode__(self):
         return self.name

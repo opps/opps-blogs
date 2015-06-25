@@ -181,7 +181,7 @@ class BlogAdmin(NotUserPublishableAdmin):
                        'layout_mode', 'main_image', 'user')}),
         (_('Publication'), {
             'classes': ('extrapretty'),
-            'fields': ('published', 'date_available')}),
+            'fields': ('published', 'date_available', 'external')}),
     )
 
     def has_change_permission(self, request, obj=True):
